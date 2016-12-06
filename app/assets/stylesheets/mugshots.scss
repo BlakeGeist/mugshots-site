@@ -1,0 +1,47 @@
+// Place all the styles related to the Mugshots controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.mugshots {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+  .mugshots-mugshot {
+
+  }
+
+    .mugshots-mugshot-name {
+      max-width: 240px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+    }
+
+.mugshot {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+  .mugshot-info {
+    padding-left: 25px;
+    flex: 0 1 480px;
+  }
+
+    .mugshot-info-item {
+
+      &.mod-name {
+        text-transform: capitalize;
+      }
+
+    }
+
+  .mugshot-photos {
+    flex: 0 1 480px;
+  }
+
+  .mugshot-photos-photo img {
+    max-width: 480px;
+  }

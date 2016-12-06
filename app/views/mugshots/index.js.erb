@@ -1,0 +1,6 @@
+$('.mugshots').append('<%= j render("mugshots") %>');
+<% if @mugshots.next_page %>
+  $('.pagination').replaceWith('<%= j will_paginate(@mugshots) %>');
+<% else %>
+  $('.pagination').remove();
+<% end %>

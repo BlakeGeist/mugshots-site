@@ -1,0 +1,13 @@
+<%= form_for([@mugshot]) do |f| %>
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :photo %><br>
+    <%= f.text_area :photo %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

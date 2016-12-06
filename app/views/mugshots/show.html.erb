@@ -1,0 +1,41 @@
+<main>
+
+  <section class="mugshot">
+
+    <div class="mugshot-photos">
+
+      <% @mugshot.photos.each do |photo| %>
+
+        <div class="mugshot-photos-photo"><%= image_tag photo.image.url(:original) %></div>
+
+      <% end %>
+
+    </div>
+
+    <div class="mugshot-info">
+
+      <h1 class="mugshot-info-item mod-name"><%= @mugshot.name.downcase %></h1>
+
+      <div class="mugshot-info-item mod-county"><strong>Arrest Location:</strong> <span class="capitalize"><%= @county.name %> county</span></div>
+
+      <div class="mugshot-info-item mod-booking-time"><strong>Arrest Date</strong> <%= @mugshot.booking_time %></div>
+
+      <h2>Charges</h2>
+
+      <ul>
+
+        <% @mugshot.charges.each do |charge| %>
+
+          <li><%= charge.charge %></li>
+
+        <% end %>
+
+      </ul>
+
+      <div><%= link_to 'Previous', state_county_mugshot_path(@state, @county, @mugshot.previous) if @mugshot.previous%> | <%= link_to 'Next', state_county_mugshot_path(@state, @county, @mugshot.next) if @mugshot.next%></div>
+
+    </div>
+
+  </section>
+
+</main>

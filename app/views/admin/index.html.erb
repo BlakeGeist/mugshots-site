@@ -1,0 +1,45 @@
+<% @states.each do |state| %>
+
+  <p>Name: <%= state.name %> <br /> Abbv: <%= state.abbv %> <br /> <%= link_to 'Delete', state_path(state), method: :delete, data: { confirm: 'Are you sure?' } %></p>
+
+  <%= state.counties.count %>
+
+  <% state.counties.each do |county| %>
+
+    <p>Name: <%= county.name %></p>
+    <p>Name: <%= county.abbv %></p>
+
+    <%= link_to 'Delete', state_county_path(state,county), method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% end %>
+
+  <h2>Add a comment:</h2>
+  <%= form_for([state, state.counties.build]) do |f| %>
+    <p>
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
+    </p>
+    <p>
+      <%= f.label :abbv %><br>
+      <%= f.text_field :abbv %>
+    </p>
+    <p>
+      <%= f.submit %>
+    </p>
+  <% end %>
+
+<% end %>
+
+<h2>Add a state:</h2>
+<%= form_for @state do |f| %>
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :abbv %><br>
+    <%= f.text_field :abbv %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

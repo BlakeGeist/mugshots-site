@@ -1,0 +1,16 @@
+# Fill in your AWS Access Key ID and Secret Access Key
+# http://aws.amazon.com/security-credentials
+access_key_id: AKIAINQRGIFVPSZPYUYQ
+secret_access_key: apJ1ENvJAAN/MATz09hCGqTqG52LlqnNQ8iVBY/Z
+
+development:
+  access_key_id: AKIAINQRGIFVPSZPYUYQ
+  secret_access_key: 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
+  bucket: mugshots.bucket
+  simple_db_consistent_reads: false
+  s3_region: us-west-2
+production:
+  access_key_id: AKIAINQRGIFVPSZPYUYQ
+  secret_access_key: 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
+  bucket: mugshots.bucket
+  simple_db_consistent_reads: false
