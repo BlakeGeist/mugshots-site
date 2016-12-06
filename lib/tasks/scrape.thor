@@ -25,10 +25,6 @@ class Scrape < Thor
 
 		puts 'scraping ada county'
 
-		chromedriver_path = File.join(File.absolute_path('C:/', File.dirname(__FILE__)),"chromedriver","chromedriver.exe")
-
-		Selenium::WebDriver::Chrome.driver_path = chromedriver_path
-
 		CURRENT_DIR = File.expand_path(File.dirname(__FILE__))
 		CHROMEDRIVER_FN = File.join(CURRENT_DIR, "bin/chromedriver")
 		# —OR—
