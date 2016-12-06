@@ -23,11 +23,7 @@ class Scrape < Thor
 
 		puts 'scraping ada county'
 
-		chromedriver_path = File.join(File.absolute_path('C:/', File.dirname(__FILE__)),"chromedriver","chromedriver.exe")
-
-		Selenium::WebDriver::Chrome.driver_path = chromedriver_path
-
-	  browser = Watir::Browser.new :chrome
+		browser = Watir::Browser.new :phantomjs
 
 		browser.goto "https://adasheriff.org/webapps/sheriff/reports/"
 
@@ -44,6 +40,12 @@ class Scrape < Thor
 		list.each do |item|
 
 			inmate_list.push(item.text)
+
+		end
+
+		if ada_county.list.nil?
+
+			ada_county.list = Array.new
 
 		end
 
