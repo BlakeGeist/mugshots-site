@@ -12,13 +12,15 @@ default: &default
   username: postgres
   password: bg30170
 
-development:
+production:
+  host: ec2-174-129-41-23.compute-1.amazonaws.com
   adapter: postgresql
   encoding: unicode
-  database: mugshots
+  database: d11vlrmht8amig
   pool: 5
-  username: postgres
-  password: bg30170
+  username: pnmkooeniwsbbo
+  password: LX9O_JnQlm1MKdVhfPGrVpdJ2N
+
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
