@@ -17,7 +17,7 @@ gem 'coffee-script-source', '1.8.0'
 # gem 'therubyracer', platforms: :ruby
 gem 'fog'
 gem "paperclip", "~> 5.0.0"
-gem 'aws-sdk'
+gem 'aws-sdk', '~> 2.3'
 gem 'rmagick', '~> 2.13.2', :platforms => :ruby
 gem 'mechanize'
 gem 'devise'
