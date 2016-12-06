@@ -129,10 +129,13 @@ class Scrape < Thor
 
 		puts 'scraping canyon county'
 
+		chromedriver_path = File.join("bin/chromedriver")
+
+		Selenium::WebDriver::Chrome.driver_path = chromedriver_path
+
 	  browser = Watir::Browser.new :chrome
 
 		browser.goto "http://apps.canyonco.org/wpprod/CurrentArrests.aspx?Page=Current_Arrests"
-
 
 		canyon_county = County.find_by slug: 'canyon'
 
