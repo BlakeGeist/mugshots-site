@@ -51,8 +51,6 @@ class Scrape < Thor
 
 			name = arrest.css('.arrest-title-bar strong').text
 
-			unless ada_county.list.include? name
-
 				name = arrest.css('.arrest-title-bar strong').text.split(',')
 
 				name = "#{name[1]} #{name[0]}"
@@ -101,7 +99,6 @@ class Scrape < Thor
 
 				end
 
-			end
 
 		end
 
@@ -162,8 +159,6 @@ class Scrape < Thor
 
 				name = inmate.css('.NameLink').text
 
-				unless canyon_county.list.include? name
-
 					arrest_date = inmate.css('td:nth-child(3) span').text
 
 					charges = inmate.css('td:nth-child(4) span').inner_html
@@ -206,7 +201,6 @@ class Scrape < Thor
 
 				end
 
-			end
 
 		end
 
