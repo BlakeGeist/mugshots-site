@@ -159,6 +159,8 @@ class Scrape < Thor
 
 				name = inmate.css('.NameLink').text
 
+				unless canyon_county.list.include? name
+
 					arrest_date = inmate.css('td:nth-child(3) span').text
 
 					charges = inmate.css('td:nth-child(4) span').inner_html
@@ -201,6 +203,7 @@ class Scrape < Thor
 
 				end
 
+			end
 
 		end
 
