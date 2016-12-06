@@ -25,7 +25,7 @@ class Scrape < Thor
 
 		puts 'scraping ada county'
 
-		Selenium::WebDriver::Chrome.driver_path = '/app/vendor/chromedriver'
+		Selenium::WebDriver::Chrome driver_path: '/app/vendor/chromedriver'
 
 		browser = Watir::Browser.new :chrome
 
