@@ -130,8 +130,7 @@ class Scrape < Thor
 		require 'watir-webdriver'
 
 		# Specify the driver path
-		chromedriver_path = File.join(File.absolute_path('../..', File.dirname(__FILE__)),"browsers","chromedriver.exe")
-		Selenium::WebDriver::Chrome.driver_path = chromedriver_path
+		Selenium::WebDriver.for :chrome, driver_path: '/path' /app/vendor/bundle/ruby/2.2.0/gems/selenium-webdriver-3.0.3/lib/selenium/webdriver/common/platform.rb
 
 		puts 'scraping canyon county'
 
