@@ -129,9 +129,6 @@ class Scrape < Thor
 
 		require 'watir-webdriver'
 
-		# Specify the driver path
-		Selenium::WebDriver.for :chrome, driver_path: '/path' /app/vendor/bundle/ruby/2.2.0/gems/selenium-webdriver-3.0.3/lib/selenium/webdriver/common/platform.rb
-
 		puts 'scraping canyon county'
 
 	  browser = Watir::Browser.new :chrome
