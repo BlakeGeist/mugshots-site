@@ -129,9 +129,6 @@ class Scrape < Thor
 
 		puts 'scraping canyon county'
 
-		Selenium::WebDriver.for :chrome, driver_path: "/app/bin:/app/vendor/bundle/bin:/app/bin/"
-
-	  browser = Watir::Browser.new :chrome
 
 		browser.goto "http://apps.canyonco.org/wpprod/CurrentArrests.aspx?Page=Current_Arrests"
 
