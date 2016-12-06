@@ -127,8 +127,6 @@ class Scrape < Thor
 
 		require 'watir'
 
-		require 'watir-webdriver'
-
 		puts 'scraping canyon county'
 
 	  browser = Watir::Browser.new :chrome
