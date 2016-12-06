@@ -129,6 +129,7 @@ class Scrape < Thor
 
 		puts 'scraping canyon county'
 
+		browser = Watir::Browser.new :phantomjs
 
 		browser.goto "http://apps.canyonco.org/wpprod/CurrentArrests.aspx?Page=Current_Arrests"
 
@@ -140,15 +141,21 @@ class Scrape < Thor
 
 		list = doc.css('.NameLink')
 
+		puts list
+
 		inmate_list = Array.new
 
 		list.each do |item|
+
+			break
 
 			inmate_list.push(item.text)
 
 		end
 
 		inmates.each do |inmate|
+
+
 
 			unless inmate.to_s.length < 500
 

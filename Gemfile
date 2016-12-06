@@ -34,8 +34,7 @@ gem 'will_paginate'
 gem 'thor'
 
 gem "watir", "~> 6.0.0"
-gem "watir-rails"
-gem 'selenium-webdriver', '~>3.0'
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
