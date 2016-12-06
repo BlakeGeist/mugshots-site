@@ -1,1 +1,1 @@
-bin/rails server -p $PORT -e $RAILS_ENV
+web: bundle exec ruby web.rb -p $PORT
