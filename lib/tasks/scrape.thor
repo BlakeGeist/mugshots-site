@@ -141,8 +141,6 @@ class Scrape < Thor
 
 		list = doc.css('.NameLink')
 
-		puts list
-
 		inmate_list = Array.new
 
 		list.each do |item|
