@@ -129,6 +129,7 @@ class Scrape < Thor
 
 		puts 'scraping canyon county'
 
+
 		browser = Watir::Browser.new :phantomjs
 
 		browser.goto "http://apps.canyonco.org/wpprod/CurrentArrests.aspx?Page=Current_Arrests"
