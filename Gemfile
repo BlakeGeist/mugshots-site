@@ -35,6 +35,7 @@ gem 'thor'
 gem "watir", "~> 6.0.0"
 
 
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

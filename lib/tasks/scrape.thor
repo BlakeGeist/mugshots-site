@@ -5,7 +5,7 @@ class Scrape < Thor
 
     require File.expand_path('config/environment.rb')
 
-    require 'rubygems'
+		require 'rubygems'
 
     require 'nokogiri'
 
@@ -21,9 +21,15 @@ class Scrape < Thor
 
 		require 'watir'
 
+		require 'selenium-webdriver'
+
 		puts 'scraping ada county'
 
-		browser = Watir::Browser.new :phantomjs
+		chromedriver_path = File.join(File.absolute_path('C:/', File.dirname(__FILE__)),"chromedriver","chromedriver.exe")
+
+		Selenium::WebDriver::Chrome.driver_path = chromedriver_path
+
+		browser = Watir::Browser.new :chrome
 
 		browser.goto "https://adasheriff.org/webapps/sheriff/reports/"
 
@@ -49,6 +55,10 @@ class Scrape < Thor
 
 		end
 
+		image = doc.css('#ContentPlaceHolder1_upMugShot img').attr('src').to_s
+
+		puts image
+
 		arrests.each do |arrest|
 
 			name = arrest.css('.arrest-title-bar strong').text
@@ -59,11 +69,15 @@ class Scrape < Thor
 
 				browser.div(:id => arrest.attr("id")).click
 
-				sleep 2
+				sleep 3
 
 			  doc = Nokogiri::HTML browser.html
 
 				image = doc.css('#ContentPlaceHolder1_upMugShot img').attr('src').to_s
+
+				puts image
+
+				break
 
 				name[0] = ''
 
