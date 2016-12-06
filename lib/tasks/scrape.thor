@@ -29,7 +29,6 @@ class Scrape < Thor
 
 		browser = Watir::Browser.new :chrome
 
-
 		browser.goto "https://adasheriff.org/webapps/sheriff/reports/"
 
 		ada_county = County.find_by slug: 'ada'
