@@ -145,9 +145,13 @@ class Scrape < Thor
 
 		list.each do |item|
 
-			break
-
 			inmate_list.push(item.text)
+
+		end
+
+		if canyon_county.list.nil?
+
+			canyon_county.list = Array.new
 
 		end
 
