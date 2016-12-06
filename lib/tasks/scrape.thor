@@ -129,7 +129,7 @@ class Scrape < Thor
 
 		puts 'scraping canyon county'
 
-		Selenium::WebDriver.for :chrome, driver_path: "/usr/local/bin:/usr/bin:/bin:/app/bin/chromedriver"
+		Selenium::WebDriver.for :chrome, driver_path: "/bin/chromedriver"
 
 	  browser = Watir::Browser.new :chrome
 
