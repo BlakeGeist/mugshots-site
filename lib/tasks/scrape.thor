@@ -33,6 +33,7 @@ class Scrape < Thor
 
 		ada_county = County.find_by slug: 'ada'
 
+
 		doc = Nokogiri::HTML browser.html
 
 		arrests = doc.css('.arrest')
