@@ -127,6 +127,12 @@ class Scrape < Thor
 
 		require 'watir'
 
+		require 'watir-webdriver'
+
+		# Specify the driver path
+		chromedriver_path = File.join(File.absolute_path('../..', File.dirname(__FILE__)),"browsers","chromedriver.exe")
+		Selenium::WebDriver::Chrome.driver_path = chromedriver_path
+
 		puts 'scraping canyon county'
 
 		chromedriver_path = File.join(File.absolute_path('C:/', File.dirname(__FILE__)),"chromedriver","chromedriver.exe")
