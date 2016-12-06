@@ -25,6 +25,7 @@ class Scrape < Thor
 
 		puts 'scraping ada county'
 
+
 		browser = Watir::Browser.new :chrome
 
 		browser.goto "https://adasheriff.org/webapps/sheriff/reports/"
