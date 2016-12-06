@@ -27,6 +27,7 @@ class Scrape < Thor
 
 	  Selenium::WebDriver.for :chrome, driver_path: 'vendor/chromedriver'
 
+
 		browser = Watir::Browser.new :chrome
 
 		browser.goto "https://adasheriff.org/webapps/sheriff/reports/"
