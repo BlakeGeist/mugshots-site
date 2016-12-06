@@ -1,1 +1,1 @@
-web: bundle exec thin -R config.ru start -p $PORT -e $RACK_ENV
+bin/rails server -p $PORT -e $RAILS_ENV
