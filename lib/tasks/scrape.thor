@@ -133,7 +133,6 @@ class Scrape < Thor
 
 		browser.goto "http://apps.canyonco.org/wpprod/CurrentArrests.aspx?Page=Current_Arrests"
 
-
 		canyon_county = County.find_by slug: 'canyon'
 
 		doc = Nokogiri::HTML browser.html
