@@ -131,7 +131,7 @@ class Scrape < Thor
 
 		chromedriver_path = File.join("bin/chromedriver")
 
-		Selenium::WebDriver::Chrome.driver_path = chromedriver_path
+		Selenium::WebDriver.for :chrome, driver_path: chromedriver_path
 
 	  browser = Watir::Browser.new :chrome
 
