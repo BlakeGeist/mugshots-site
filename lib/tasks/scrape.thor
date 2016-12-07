@@ -59,7 +59,7 @@ class Scrape < Thor
 
 			name = arrest.css('.arrest-title-bar strong').text
 
-			unless canyon_county.list.include? name
+			unless ada_county.list.include? name
 
 				name = arrest.css('.arrest-title-bar strong').text.split(',')
 
