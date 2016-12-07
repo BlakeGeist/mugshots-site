@@ -25,9 +25,11 @@ class Scrape < Thor
 
 		puts 'scraping ada county'
 
-	  Selenium::WebDriver.for :chrome, driver_path: 'vendor/chromedriver'
+		args = %w{--ignore-ssl-errors=true}
 
-		browser = Watir::Browser.new :chrome
+		browser = Watir::Browser.new(:phantomjs, :args => args)
+
+		browser.window.resize_to(1600, 1200)
 
 		browser.goto "https://adasheriff.org/webapps/sheriff/reports/"
 
@@ -53,10 +55,6 @@ class Scrape < Thor
 
 		end
 
-		image = doc.css('#ContentPlaceHolder1_upMugShot img').attr('src').to_s
-
-		puts image
-
 		arrests.each do |arrest|
 
 			name = arrest.css('.arrest-title-bar strong').text
@@ -65,7 +63,7 @@ class Scrape < Thor
 
 				name = "#{name[1]} #{name[0]}"
 
-				browser.div(:id => arrest.attr("id")).click
+				broser = browser.div(:id => arrest.attr("id")).fire_event :click
 
 				sleep 3
 
@@ -74,6 +72,8 @@ class Scrape < Thor
 				image = doc.css('#ContentPlaceHolder1_upMugShot img').attr('src').to_s
 
 				puts image
+
+browser.screenshot.save('phantomjs_without_images.png')
 
 				break
 
