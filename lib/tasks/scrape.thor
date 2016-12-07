@@ -73,10 +73,6 @@ class Scrape < Thor
 
 				puts image
 
-browser.screenshot.save('phantomjs_without_images.png')
-
-				break
-
 				name[0] = ''
 
 			  info = arrest.css('.info').inner_html.split("<br>")
