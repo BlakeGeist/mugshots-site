@@ -59,6 +59,8 @@ class Scrape < Thor
 
 			name = arrest.css('.arrest-title-bar strong').text
 
+			unless canyon_county.list.include? name
+
 				name = arrest.css('.arrest-title-bar strong').text.split(',')
 
 				name = "#{name[1]} #{name[0]}"
@@ -70,8 +72,6 @@ class Scrape < Thor
 			  doc = Nokogiri::HTML browser.html
 
 				image = doc.css('#ContentPlaceHolder1_upMugShot img').attr('src').to_s
-
-				puts image
 
 				name[0] = ''
 
@@ -109,6 +109,7 @@ class Scrape < Thor
 
 				end
 
+			end
 
 		end
 
