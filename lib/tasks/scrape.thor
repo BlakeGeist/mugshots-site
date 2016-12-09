@@ -154,6 +154,8 @@ class Scrape < Thor
 
 		inmate_list = Array.new
 
+		new_que_list = Array.new
+
 		list.each do |item|
 
 			inmate_list.push(item.text)
@@ -166,13 +168,30 @@ class Scrape < Thor
 
 		end
 
-		inmates.each do |inmate|
+		if canyon_county.que_list.nil?
 
+			canyon_county.que_list = Array.new
+
+		end
+
+		list_from_last_time = JSON.parse canyon_county.list
+
+		inmate_list.each do |item|
+
+			unless list_from_last_time.include? item
+
+				new_que_list.push(item)
+
+			end
+
+		end
+
+		inmates.each do |inmate|
 			unless inmate.to_s.length < 500
 
 				name = inmate.css('.NameLink').text
 
-				unless canyon_county.list.include? name
+				if canyon_county.que_list.include? name
 
 					arrest_date = inmate.css('td:nth-child(3) span').text
 
@@ -221,6 +240,8 @@ class Scrape < Thor
 		end
 
 		canyon_county.update(:list => inmate_list.to_json)
+
+		canyon_county.update(:que_list => new_que_list.to_json)
 
   end
 
