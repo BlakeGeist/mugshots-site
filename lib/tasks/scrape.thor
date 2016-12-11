@@ -43,6 +43,8 @@ class Scrape < Thor
 
 		inmate_list = Array.new
 
+		new_que_list = Array.new
+
 		list.each do |item|
 
 			inmate_list.push(item.text)
@@ -52,6 +54,24 @@ class Scrape < Thor
 		if ada_county.list.nil?
 
 			ada_county.list = Array.new
+
+		end
+
+		if ada_county.que_list.nil?
+
+			ada_county.que_list = Array.new
+
+		end
+
+		list_from_last_time = JSON.parse ada_county.list
+
+		inmate_list.each do |item|
+
+			unless list_from_last_time.include? item
+
+				new_que_list.push(item)
+
+			end
 
 		end
 
@@ -114,6 +134,8 @@ class Scrape < Thor
 		end
 
 		ada_county.update(:list => inmate_list.to_json)
+
+		ada_county.update(:que_list => new_que_list.to_json)
 
   end
 
