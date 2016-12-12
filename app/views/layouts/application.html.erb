@@ -9,7 +9,10 @@
   <body>
     <header>
       <nav>
-        <%= link_to 'Home', root_path %> <%= link_to "Sign out", destroy_user_session_path, :method => :delete if user_signed_in?%>
+        <%= link_to 'Home', root_path %>
+        <%= link_to 'Ada County', state_county_path("idaho", "ada") %>
+        <%= link_to 'Canyon County', state_county_path("idaho", "canyon") %>
+        <%= link_to "Sign out", destroy_user_session_path, :method => :delete if user_signed_in? %>
       </nav>
     </header>
     <%= yield %>
