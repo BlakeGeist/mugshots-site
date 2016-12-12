@@ -6,6 +6,8 @@ class CountiesController < ApplicationController
   def show
     @county = County.friendly.find(params[:id])
     @mugshots = Mugshot.where(county: @county).order("created_at DESC").page(params[:page]).per_page(20)
+
+    @title="#{@county.name.capitalize} County Mugshots"
   end
 
   def new
@@ -21,7 +23,6 @@ class CountiesController < ApplicationController
   	@county = @state.counties.create( county_params )
 
     redirect_to :back
-
   end
 
   def update

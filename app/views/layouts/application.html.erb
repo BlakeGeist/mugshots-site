@@ -1,7 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>MugshotsSite</title>
+    <title>
+
+      <% unless @title.blank? %>
+
+        <%= @title %>
+
+      <% else %>
+
+        Local Mugshots
+
+      <% end %>
+
+    </title>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
