@@ -1,12 +1,22 @@
 <main>
 
+  <% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+  <% end %>
+
   <section class="mugshot">
 
     <div class="mugshot-photos">
 
-      <% @mugshot.photos.each do |photo| %>
+      <div class="mugshot-photos-photo"><%= image_tag  @mugshot.photos.last.image.url(:original) %></div>
 
-        <div class="mugshot-photos-photo"><%= image_tag photo.image.url(:original) %></div>
+      <% if user_signed_in? %>
+
+      <div class="mugshot-admin-tools">
+
+        <%= link_to "Re-fetch Mugshot", { action: "re_scrape_mugshot", mugshot_id: @mugshot.id}, remote: true %>
+
+      </div>
 
       <% end %>
 

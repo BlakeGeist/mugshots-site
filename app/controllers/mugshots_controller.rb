@@ -1,4 +1,6 @@
 class MugshotsController < ApplicationController
+  include AdminHelper
+
   def index
     @mugshots = Mugshot.all.order("created_at DESC").order("created_at DESC").page(params[:page]).per_page(20)
   end
@@ -7,8 +9,7 @@ class MugshotsController < ApplicationController
     @mugshot = Mugshot.friendly.find(params[:id])
     @county = County.find(@mugshot.county_id)
     @state = State.find(@county.state_id)
-    @title="#{@mugshot.name.capitalize} | #{@county.name.capitalize} County"
-
+    @title="#{@mugshot.name.capitalize} | #{@county.name} County"
   end
 
   def new
@@ -44,6 +45,18 @@ class MugshotsController < ApplicationController
     @mugshot.destroy
 
     redirect_to mugshots_path
+  end
+
+  def re_scrape_mugshot
+
+    @mugshot = Mugshot.friendly.find(params[:mugshot_id])
+
+    re_fetch_mugshot('ada')
+
+    respond_to do |format|
+      format.js
+    end
+
   end
 
   private

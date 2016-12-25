@@ -11,11 +11,13 @@ Rails.application.routes.draw do
    resources :states, :path => '' do
      resources :counties, :path => '' do
        resources :mugshots, :path => '', :except => [:index] do
+         collection do
+           get :re_scrape_mugshot
+         end
          resources :photos
        end
      end
    end
-
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
