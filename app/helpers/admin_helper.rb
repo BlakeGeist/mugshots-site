@@ -2,62 +2,120 @@ module AdminHelper
 
   def re_fetch_mugshot(county)
 
-    require File.expand_path('config/environment.rb')
+    case county
+    when 'ada'
 
-		require 'rubygems'
+      require File.expand_path('config/environment.rb')
 
-    require 'nokogiri'
+  		require 'rubygems'
 
-    require 'open-uri'
+      require 'nokogiri'
 
-		require 'aws-sdk'
+      require 'open-uri'
 
-    require 'csv'
+  		require 'aws-sdk'
 
-    require 'json'
+      require 'csv'
 
-		require 'mechanize'
+      require 'json'
 
-		require 'watir'
+  		require 'mechanize'
 
-		require 'selenium-webdriver'
+  		require 'watir'
 
-		puts 're-fetching mugshot'
+  		require 'selenium-webdriver'
 
-		args = %w{--ignore-ssl-errors=true}
+  		puts 're-fetching mugshot'
 
-		browser = Watir::Browser.new(:phantomjs, :args => args)
+  		args = %w{--ignore-ssl-errors=true}
 
-		browser.window.resize_to(1600, 1200)
+  		browser = Watir::Browser.new(:phantomjs, :args => args)
 
-		browser.goto "https://adasheriff.org/webapps/sheriff/reports/"
+  		browser.window.resize_to(1600, 1200)
 
-		ada_county = County.find_by slug: 'ada'
+  		browser.goto "https://adasheriff.org/webapps/sheriff/reports/"
 
-		doc = Nokogiri::HTML browser.html
+  		ada_county = County.find_by slug: 'ada'
 
-		arrests = doc.css('.arrest')
+  		doc = Nokogiri::HTML browser.html
 
-    split_name = @mugshot.name.split(" ")
+  		arrests = doc.css('.arrest')
 
-    arrests.each do |arrest|
+      split_name = @mugshot.name.split(" ")
 
-      if arrest.text.include? (split_name[0])
+      arrests.each do |arrest|
 
-        broser = browser.div(:id => arrest.attr("id")).fire_event :click
+        if arrest.text.include? (split_name[0])
 
-				sleep 3
+          broser = browser.div(:id => arrest.attr("id")).fire_event :click
 
-        doc = Nokogiri::HTML browser.html
+  				sleep 3
 
-        image = doc.css('#ContentPlaceHolder1_upMugShot img').attr('src').to_s
+          doc = Nokogiri::HTML browser.html
 
-        @mugshot.photos.create!(:image => image)
+          image = doc.css('#ContentPlaceHolder1_upMugShot img').attr('src').to_s
 
-      end
+          @mugshot.photos.create!(:image => image)
 
-		end
+        end
 
+  		end
+
+    when 'canyon'
+
+      require File.expand_path('config/environment.rb')
+
+      require 'rubygems'
+
+      require 'nokogiri'
+
+      require 'open-uri'
+
+  		require 'aws-sdk'
+
+      require 'csv'
+
+      require 'json'
+
+  		require 'mechanize'
+
+  		require 'watir'
+
+  		puts 're-fetching ' + @mugshot.name + 's mugshot'
+
+  		browser = Watir::Browser.new :phantomjs
+
+  		browser.goto "http://apps.canyonco.org/wpprod/CurrentArrests.aspx?Page=Current_Arrests"
+
+  		canyon_county = County.find_by slug: 'canyon'
+
+  		doc = Nokogiri::HTML browser.html
+
+  		inmates = doc.css('tr:not(:first-child)')
+
+  		inmates.each do |inmate|
+
+  			unless inmate.to_s.length < 500
+
+  				name = inmate.css('.NameLink').text
+
+  				if name && name == @mugshot.name
+
+  					photo = inmate.at_css('input').attr('src').gsub!('thumb', 'full')
+
+  					@mugshot.photos.create!(:image => photo)
+
+  				end
+
+  			end
+
+  		end
+
+    else
+
+      puts 'fuck off, it didnt work'
+
+    end
 
   end
 

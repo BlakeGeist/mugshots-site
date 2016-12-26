@@ -10,7 +10,7 @@
 
       <div class="mugshot-photos-photo"><%= image_tag  @mugshot.photos.last.image.url(:original) %></div>
 
-      <% if user_signed_in? && @county.name == 'ada'%>
+      <% if user_signed_in? && @county.name == 'ada' || @county.name = 'canyon'%>
 
       <div class="mugshot-admin-tools">
 
