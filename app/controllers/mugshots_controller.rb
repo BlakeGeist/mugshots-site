@@ -42,9 +42,11 @@ class MugshotsController < ApplicationController
 
   def destroy
     @mugshot = Mugshot.find(params[:id])
+    @county = County.find(@mugshot.county)
+    @state = State.find(@county.state)
     @mugshot.destroy
 
-    redirect_to mugshots_path
+    redirect_to state_county_path(@state, @county)
   end
 
   def re_scrape_mugshot
