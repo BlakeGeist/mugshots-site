@@ -10,6 +10,12 @@ class CountiesController < ApplicationController
     @title="#{@county.name.capitalize} County Mugshots"
   end
 
+  def multi_offender_list
+    @county = County.friendly.find(params[:county_id])
+    @mugshots = Mugshot.where(county: @county).group(:name, :id)
+    render 'multi_offender_list'
+  end
+
   def new
     @county = County.new
   end

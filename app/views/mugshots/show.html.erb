@@ -1,14 +1,16 @@
 <main>
 
-  <% if flash[:notice] %>
-    <div class="notice"><%= flash[:notice] %></div>
-  <% end %>
-
   <section class="mugshot">
 
     <div class="mugshot-photos">
 
       <%= render 'photo' %>
+
+      <div class="mugshot-modal">
+
+        <%= link_to "Unpublish", {controller: 'mugshots', action: 'modal', mugshot_id: @mugshot.id}, remote: true, class: 'modal-toggle' %>
+
+      </div>
 
       <% if user_signed_in? && @county.name == 'ada' || @county.name = 'canyon'%>
 

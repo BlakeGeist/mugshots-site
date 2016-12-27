@@ -1,0 +1,12 @@
+setTimeout(function(){
+  $('.footer').append('<%= j render("/templates/modals/default") %>');
+
+  $('.modal').toggleClass('is-visible');
+
+  $('.modal-toggle').on('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    $('.modal').toggleClass('is-visible');
+  });
+
+}, 1);

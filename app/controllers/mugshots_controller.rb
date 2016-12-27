@@ -45,22 +45,24 @@ class MugshotsController < ApplicationController
     @county = County.find(@mugshot.county)
     @state = State.find(@county.state)
     @mugshot.destroy
-
     redirect_to state_county_path(@state, @county)
   end
 
   def re_scrape_mugshot
-
     @mugshot = Mugshot.friendly.find(params[:mugshot_id])
-
     @county = @mugshot.county
-
     re_fetch_mugshot(@county.name)
-
     respond_to do |format|
       format.js
     end
+  end
 
+
+  def modal
+    @mugshot = Mugshot.friendly.find(params[:mugshot_id])
+    respond_to do |format|
+      format.js
+    end
   end
 
   private

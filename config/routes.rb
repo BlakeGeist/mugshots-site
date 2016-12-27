@@ -10,9 +10,11 @@ Rails.application.routes.draw do
 
    resources :states, :path => '' do
      resources :counties, :path => '' do
+       get :multi_offender_list
        resources :mugshots, :path => '', :except => [:index] do
          collection do
            get :re_scrape_mugshot
+           get :modal
          end
          resources :photos
        end

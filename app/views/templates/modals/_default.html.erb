@@ -1,0 +1,33 @@
+<div class="modal">
+
+  <div class="modal-overlay modal-toggle"></div>
+
+  <div class="modal-wrapper modal-transition">
+
+    <div class="modal-header">
+
+      <button class="modal-close modal-toggle">Close</button>
+
+      <h2 class="modal-heading">Unpublish Mugshot</h2>
+
+    </div>
+
+    <div class="modal-body">
+
+      <div class="modal-content">
+
+        <center>
+
+          <%= @mugshot.name.upcase %>
+
+          <div class="mugshot-photos-photo"><%= image_tag  @mugshot.photos.last.image.url(:medium) %></div>
+
+          Unpublish
+
+        </center>
+
+      </div>
+
+    </div>
+
+  </div>
