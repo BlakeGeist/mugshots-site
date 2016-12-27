@@ -298,6 +298,8 @@ class Scrape < Thor
 
 		doc = Nokogiri::HTML browser.html
 
+		puts doc
+
 		inmates = doc.css('#resultsTable .table tbody')
 
 		list = doc.css('#resultsTable .cellLarge span:nth-child(1)')
@@ -318,17 +320,13 @@ class Scrape < Thor
 
 		end
 
-		puts 'here'
-
 		inmates.each do |inmate|
-
-			puts 'here 2'
 
 			name = inmate.css('.cellLarge span:nth-child(1)').text
 
-			unless horry_county.list.include? name
+			puts name
 
-				puts name
+			unless horry_county.list.include? name
 
 				arrest_date = inmate.css('.cellSmall:nth-child(5)').text
 
