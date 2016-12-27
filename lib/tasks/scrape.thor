@@ -267,4 +267,107 @@ class Scrape < Thor
 
   end
 
+	desc "horry_county","scrape the mugshots on the following site"
+	def horry_county
+
+		require File.expand_path('config/environment.rb')
+
+    require 'rubygems'
+
+    require 'nokogiri'
+
+    require 'open-uri'
+
+		require 'aws-sdk'
+
+    require 'csv'
+
+    require 'json'
+
+		require 'mechanize'
+
+		require 'watir'
+
+		puts 'scraping horry county'
+
+		browser = Watir::Browser.new :phantomjs
+
+		browser.goto "http://www.horrycounty.org/bookings"
+
+		horry_county = County.find_by slug: 'horry'
+
+		doc = Nokogiri::HTML browser.html
+
+		inmates = doc.css('#resultsTable .table tbody')
+
+		list = doc.css('#resultsTable .cellLarge span:nth-child(1)')
+
+		inmate_list = Array.new
+
+		new_que_list = Array.new
+
+		list.each do |item|
+
+			inmate_list.push(item.text)
+
+		end
+
+		if horry_county.list.nil?
+
+			horry_county.list = Array.new
+
+		end
+
+		inmates.each do |inmate|
+
+			unless inmate.to_s.length < 500
+
+				name = inmate.css('.cellLarge span:nth-child(1)').text
+
+				unless horry_county.list.include? name
+
+					puts name
+
+					arrest_date = inmate.css('.cellSmall:nth-child(5)').text
+
+					puts arrest_date
+
+					charges = inmate.css('.clear-cell-border ul li')
+
+					image = inmate.css('img').attr('src').to_s
+
+					horry_county.mugshots.create!(:name => name, :booking_time => arrest_date)
+
+					mugshot = Mugshot.last
+
+					mugshot.photos.create!(:image => image)
+
+					if charges.length == 1
+
+						mugshot.charges.create!(:charge => charges.text)
+
+						puts charges.text
+
+				  else
+
+				    charges.each do |charge|
+
+							mugshot.charges.create!(:charge => charge.text)
+
+							puts charge.text
+
+				    end
+
+					end
+
+				end
+
+			end
+
+		end
+
+		horry_county.update(:list => inmate_list.to_json)
+
+	end
+
 end

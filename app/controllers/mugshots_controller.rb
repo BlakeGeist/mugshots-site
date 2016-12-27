@@ -9,7 +9,7 @@ class MugshotsController < ApplicationController
     @mugshot = Mugshot.friendly.find(params[:id])
     @county = County.find(@mugshot.county_id)
     @state = State.find(@county.state_id)
-    @title="#{@mugshot.name.capitalize} | #{@county.name} County"
+    @title="#{@mugshot.name.capitalize} | #{@county.name.capitalize} County"
   end
 
   def new
