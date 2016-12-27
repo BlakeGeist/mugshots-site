@@ -318,47 +318,47 @@ class Scrape < Thor
 
 		end
 
+		puts 'here'
+
 		inmates.each do |inmate|
 
-			unless inmate.to_s.length < 500
+			puts 'here 2'
 
-				name = inmate.css('.cellLarge span:nth-child(1)').text
+			name = inmate.css('.cellLarge span:nth-child(1)').text
 
-				unless horry_county.list.include? name
+			unless horry_county.list.include? name
 
-					puts name
+				puts name
 
-					arrest_date = inmate.css('.cellSmall:nth-child(5)').text
+				arrest_date = inmate.css('.cellSmall:nth-child(5)').text
 
-					puts arrest_date
+				puts arrest_date
 
-					charges = inmate.css('.clear-cell-border ul li')
+				charges = inmate.css('.clear-cell-border ul li')
 
-					image = inmate.css('img').attr('src').to_s
+				image = inmate.css('img').attr('src').to_s
 
-					horry_county.mugshots.create!(:name => name, :booking_time => arrest_date)
+				horry_county.mugshots.create!(:name => name, :booking_time => arrest_date)
 
-					mugshot = Mugshot.last
+				mugshot = Mugshot.last
 
-					mugshot.photos.create!(:image => image)
+				mugshot.photos.create!(:image => image)
 
-					if charges.length == 1
+				if charges.length == 1
 
-						mugshot.charges.create!(:charge => charges.text)
+					mugshot.charges.create!(:charge => charges.text)
 
-						puts charges.text
+					puts charges.text
 
-				  else
+			  else
 
-				    charges.each do |charge|
+			    charges.each do |charge|
 
-							mugshot.charges.create!(:charge => charge.text)
+						mugshot.charges.create!(:charge => charge.text)
 
-							puts charge.text
+						puts charge.text
 
-				    end
-
-					end
+			    end
 
 				end
 
