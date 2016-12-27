@@ -298,8 +298,6 @@ class Scrape < Thor
 
 		doc = Nokogiri::HTML browser.html
 
-		puts doc
-
 		inmates = doc.css('#resultsTable .table tbody')
 
 		list = doc.css('#resultsTable .cellLarge span:nth-child(1)')
