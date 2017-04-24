@@ -15,6 +15,7 @@ Rails.application.routes.draw do
    resources :states, :path => '' do
      resources :counties, :path => '' do
        get :multi_offender_list
+       get :re_scrape_mugshot
        resources :mugshots, :path => '', :except => [:index] do
          collection do
            get :re_scrape_mugshot
@@ -73,5 +74,5 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  
+
 end
