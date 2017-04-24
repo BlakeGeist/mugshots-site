@@ -12,15 +12,7 @@
 
       </div>
 
-      <% if user_signed_in? && @county.name == 'ada' || @county.name == 'canyon'%>
-
-      <div class="mugshot-admin-tools">
-
-        <%= link_to "Re-fetch Mugshot", { action: "re_scrape_mugshot", mugshot_id: @mugshot.id}, remote: true %> |  <%= link_to 'Destroy', state_county_mugshot_path(@state, @county, @mugshot.id), method: :delete, remote: true, class: 'mugshot-admin-tools-button mod-delete' %>
-
-      </div>
-
-      <% end %>
+      <%= render '/partials/admin_tools', locals: {mugshot: @mugshot} %>
 
     </div>
 
