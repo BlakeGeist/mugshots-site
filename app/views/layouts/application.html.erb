@@ -29,12 +29,12 @@
   <body>
     <header>
       <nav>
-        <%= link_to 'Home', root_path %> | 
+        <%= link_to 'Home', root_path %> |
         <%= link_to 'Ada County', state_county_path("idaho", "ada") %> |
         <%= link_to 'Canyon County', state_county_path("idaho", "canyon") %> |
         <%= link_to 'Horry County', state_county_path("south-carolina", "horry") %>
         <% if user_signed_in? %>
-         | <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+         | <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
         <% end %>
       </nav>
     </header>

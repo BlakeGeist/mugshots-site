@@ -14,7 +14,7 @@
 
       <div class="mugshot-admin-tools">
 
-        <%= link_to "Re-fetch Mugshot", { action: "re_scrape_mugshot", controller: "mugshots", mugshot_id: mugshot.id}, remote: true %> |  <%= link_to 'Destroy', state_county_mugshot_path(mugshot.county.state, mugshot.county, mugshot.id), method: :delete, remote: true, class: 'mugshot-admin-tools-button mod-delete' %>
+        <%= link_to "Re-fetch Mugshot", { action: "re_scrape_mugshot", controller: "mugshots", mugshot_id: mugshot.id}, remote: true %> |  <%= link_to 'Destroy', state_county_mugshot_path(mugshot.county.state, mugshot.county, mugshot.id), method: :delete, class: 'mugshot-admin-tools-button mod-delete', remote: true %>
 
       </div>
 
