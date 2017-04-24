@@ -10,6 +10,15 @@
 
     <% end %>
 
+    <% if user_signed_in? %>
+
+      <div class="mugshot-admin-tools">
+
+        <%= link_to "Re-fetch Mugshot", { action: "re_scrape_mugshot", mugshot_id: mugshot.id}, remote: true %> |  <%= link_to 'Destroy', state_county_mugshot_path(mugshot.county.state, mugshot.county, mugshot.id), method: :delete, remote: true, class: 'mugshot-admin-tools-button mod-delete' %>
+
+      </div>
+
+    <% end %>
   </div>
 
 <% end %>
