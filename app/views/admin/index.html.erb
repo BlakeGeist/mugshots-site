@@ -12,7 +12,7 @@
     <%= link_to 'Delete', state_county_path(state,county), method: :delete, data: { confirm: 'Are you sure?' } %>
   <% end %>
 
-  <h2>Add a comment:</h2>
+  <h2>Add a county:</h2>
   <%= form_for([state, state.counties.build]) do |f| %>
     <p>
       <%= f.label :name %><br>
