@@ -319,62 +319,44 @@ class Scrape < Thor
 		end
 
 		inmates.each do |inmate|
-
 			name = inmate.css('.cellLarge span:nth-child(1)').text
-
-			puts name
-
 			unless horry_county.list.include? name
-
 				arrest_date = inmate.css('.cellSmall:nth-child(5)').text
-
-				puts arrest_date
-
 				charges = inmate.css('.clear-cell-border ul li')
-
 				image = inmate.css('img').attr('src').to_s
-
-				unless image
-					inmate_list.delete(name)
-					return
-				end
-
-				horry_county.mugshots.create!(:name => name, :booking_time => arrest_date)
-
-				mugshot = Mugshot.last
-
-				if charges.length == 1
-					if charges.text == "No Charges Listed"
-						inmate_list.delete(name)
-						return
-					else
-
-						mugshot.charges.create!(:charge => charges.text)
-
-						puts charges.text
-
+				puts 'before image'
+				puts image
+				puts 'after image'
+				if image.present?
+					puts 'image is present'
+					horry_county.mugshots.create!(:name => name, :booking_time => arrest_date)
+					mugshot = Mugshot.last
+					if charges.length == 1
+						if charges.text == "No Charges Listed"
+							puts 'no charges listed'
+							inmate_list.delete(name)
+						else
+							mugshot.charges.create!(:charge => charges.text)
+							puts charges.text
+						end
+				  else
+						puts 'inside charges'
+				    charges.each do |charge|
+							mugshot.charges.create!(:charge => charge.text)
+							puts charge.text
+				    end
 					end
-
-			  else
-
-			    charges.each do |charge|
-
-						mugshot.charges.create!(:charge => charge.text)
-
-						puts charge.text
-
-			    end
-
+					puts 'before photo create'
+					mugshot.photos.create!(:image => image)
+				else
+					puts 'no image present'
+					inmate_list.delete(name)
 				end
-
-				mugshot.photos.create!(:image => image)
-
+				puts 'after image check'
 			end
-
 		end
-
+		puts 'before inmate list'
 		horry_county.update(:list => inmate_list.to_json)
-
+		puts 'after inamte list'
 	end
-
 end
