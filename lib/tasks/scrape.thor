@@ -334,17 +334,26 @@ class Scrape < Thor
 
 				image = inmate.css('img').attr('src').to_s
 
+				unless image
+					inmate_list.delete(name)
+					return
+				end
+
 				horry_county.mugshots.create!(:name => name, :booking_time => arrest_date)
 
 				mugshot = Mugshot.last
 
-				mugshot.photos.create!(:image => image)
-
 				if charges.length == 1
+					if charges.text == "No Charges Listed"
+						inmate_list.delete(name)
+						return
+					else
 
-					mugshot.charges.create!(:charge => charges.text)
+						mugshot.charges.create!(:charge => charges.text)
 
-					puts charges.text
+						puts charges.text
+
+					end
 
 			  else
 
@@ -357,6 +366,8 @@ class Scrape < Thor
 			    end
 
 				end
+
+				mugshot.photos.create!(:image => image)
 
 			end
 
