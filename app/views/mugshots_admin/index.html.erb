@@ -1,10 +1,26 @@
-<div>
+<div class="mugshots-admin">
+
+  <div class="mugshot-admin-header">
+
+    <div class="mugshots-admin-header-item mod-name">Name</div>
+
+    <div class="mugshots-admin-header-item mod-charges">Charges</div>
+
+    <div class="mugshots-admin-header-item mod-delete">Delete</div>
+
+  </div>
 
   <% @mugshots.each do |mugshot| %>
 
-    <div><%= link_to mugshot.name, mugshot, target: '_blank' %></div>
+    <div class="mugshots-admin-mugshots-mugshot">
 
-    <div><%= link_to 'Delete', mugshot_path(mugshot.id), method: :delete, data: { confirm: 'Are you sure?' } %></div>
+      <div class="mugshots-admin-mugshots-mugshot-item mod-name"><%= link_to mugshot.name, state_county_mugshot_path(mugshot.county.state, mugshot.county, mugshot), target: '_blank' %></div>
+
+      <div class="mugshots-admin-mugshots-mugshot-item mod-charges"><%= mugshot.charges.length %></div>
+
+      <div class="mugshots-admin-mugshots-mugshot-item mod-delete"><%= link_to 'Delete', mugshot_path(mugshot.id), method: :delete, data: { confirm: 'Are you sure?' } %></div>
+
+    </div>
 
   <% end %>
 

@@ -1,3 +1,25 @@
 // Place all the styles related to the Mugshots_admin controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.mugshots-admin-mugshots-mugshot {
+  border-bottom: 1px solid #c1c1c1;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+}
+  .mugshots-admin-mugshots-mugshot-item {
+    &.mod-name {
+      flex: 0 1 20rem;
+    }
+  }
+.mugshot-admin-header {
+  border-bottom: 1px solid #c1c1c1;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+}
+  .mugshots-admin-header-item {
+    &.mod-name {
+      flex: 0 1 20rem;
+    }
+  }
