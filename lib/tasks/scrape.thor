@@ -267,6 +267,41 @@ class Scrape < Thor
 
   end
 
+	desc "charleston_county","scrape the mugshots on the following site"
+	def charleston_county
+
+		require File.expand_path('config/environment.rb')
+
+		require 'rubygems'
+
+		require 'nokogiri'
+
+		require 'open-uri'
+
+		require 'aws-sdk'
+
+		require 'csv'
+
+		require 'json'
+
+		require 'mechanize'
+
+		require 'watir'
+
+		puts 'scraping charleston county'
+
+		browser = Watir::Browser.new :phantomjs
+
+		browser.goto "http://inmatesearch.charlestoncounty.org/"
+
+		horry_county = County.find_by slug: 'charleston'
+
+		doc = Nokogiri::HTML browser.html
+
+		puts doc
+
+	end
+
 	desc "horry_county","scrape the mugshots on the following site"
 	def horry_county
 
@@ -324,10 +359,11 @@ class Scrape < Thor
 				arrest_date = inmate.css('.cellSmall:nth-child(5)').text
 				charges = inmate.css('.clear-cell-border ul li')
 				image = inmate.css('img').attr('src').to_s
+				puts name
 				puts 'before image'
 				puts image
 				puts 'after image'
-				if image.present?
+				unless image === 'http://www.horrycounty.org/mugshot/mugshot/null'
 					puts 'image is present'
 					horry_county.mugshots.create!(:name => name, :booking_time => arrest_date)
 					mugshot = Mugshot.last

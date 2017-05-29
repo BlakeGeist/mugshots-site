@@ -1,0 +1,11 @@
+<div>
+
+  <% @mugshots.each do |mugshot| %>
+
+    <div><%= link_to mugshot.name, mugshot, target: '_blank' %></div>
+
+    <div><%= link_to 'Delete', mugshot_path(mugshot.id), method: :delete, data: { confirm: 'Are you sure?' } %></div>
+
+  <% end %>
+
+</div>
