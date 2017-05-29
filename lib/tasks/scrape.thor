@@ -368,7 +368,7 @@ class Scrape < Thor
 					horry_county.mugshots.create!(:name => name, :booking_time => arrest_date)
 					mugshot = Mugshot.last
 					if charges.length == 1
-						if charges.text == "No Charges Listed"
+						if charges.text === "No Charges Listed" || chrages.text === ''
 							puts 'no charges listed'
 							inmate_list.delete(name)
 						else
