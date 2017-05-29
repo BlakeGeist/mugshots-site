@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
    root 'mugshots#index'
    get '/admin/' => 'admin#index'
+   get '/mugshots-admin/' => 'mugshots_admin#index'
 
    resources :mugshots do
      get :re_scrape_mugshot
