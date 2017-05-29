@@ -45,7 +45,7 @@ class MugshotsController < ApplicationController
     @county = County.find(@mugshot.county)
     @state = State.find(@county.state)
     @mugshot.destroy
-    redirect_to state_county_path(@state, @county)
+    redirect_to :back
   end
 
   def re_scrape_mugshot
