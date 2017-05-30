@@ -33,7 +33,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'will_paginate'
 gem 'thor'
 gem "watir", "~> 6.0.0"
-
+gem 'best_in_place', '~> 3.0.1'
 
 
 # Use ActiveModel has_secure_password

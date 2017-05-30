@@ -32,11 +32,9 @@ class CountiesController < ApplicationController
   end
 
   def update
-    @county = County.find(params[:id])
+    @county = County.friendly.find(params[:id])
     if @county.update(county_params)
-      redirect_to @county
-    else
-      render 'edit'
+      redirect_to :back
     end
   end
 
@@ -48,6 +46,6 @@ class CountiesController < ApplicationController
 
   private
     def county_params
-      params.require(:county).permit(:name, :abbv, :list, :que)
+      params.require(:county).permit(:name, :abbv, :list, :que, :description)
     end
 end
