@@ -351,6 +351,10 @@ class Scrape < Thor
 
 			horry_county.list = Array.new
 
+		else
+
+			puts horry_county.list
+
 		end
 
 		inmates.each do |inmate|
@@ -393,7 +397,6 @@ class Scrape < Thor
 		end
 		puts 'before inmate list'
 		horry_county.update(:list => inmate_list.to_json)
-		puts inmate_list
 		puts 'after inamte list'
 	end
 end
