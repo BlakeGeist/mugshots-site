@@ -1,5 +1,29 @@
 <main>
 
+  <% if @county.description %>
+
+    <section class="county-description">
+
+      <% if user_signed_in? %>
+
+        <%= form_for ([@county.state, @county]) do |f| %>
+
+          <%= f.text_area :description %>
+
+          <%= f.submit %>
+
+        <% end %>
+
+      <% else %>
+
+        <%= @county.description %>
+
+      <% end %>
+
+    </section>
+
+  <% end %>
+
   <section class="mugshots">
 
     <%= render '/mugshots/mugshots' %>

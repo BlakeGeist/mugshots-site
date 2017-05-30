@@ -47,6 +47,9 @@ GEM
       aws-sdk-core (= 2.9.11)
     aws-sigv4 (1.0.0)
     bcrypt (3.1.11-x86-mingw32)
+    best_in_place (3.0.3)
+      actionpack (>= 3.2)
+      railties (>= 3.2)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.2.3)
@@ -360,6 +363,7 @@ PLATFORMS
 
 DEPENDENCIES
   aws-sdk (~> 2.3)
+  best_in_place (~> 3.0.1)
   byebug
   coffee-rails (~> 4.1.0)
   coffee-script-source (= 1.8.0)
