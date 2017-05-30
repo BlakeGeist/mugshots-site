@@ -393,6 +393,7 @@ class Scrape < Thor
 		end
 		puts 'before inmate list'
 		horry_county.update(:list => inmate_list.to_json)
+		puts inmate_list
 		puts 'after inamte list'
 	end
 end
