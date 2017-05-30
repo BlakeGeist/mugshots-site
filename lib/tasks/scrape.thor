@@ -347,13 +347,11 @@ class Scrape < Thor
 
 		end
 
+		puts inmate_list
+
 		if horry_county.list.nil?
 
 			horry_county.list = Array.new
-
-		else
-
-			puts horry_county.list
 
 		end
 
