@@ -365,42 +365,25 @@ class Scrape < Thor
 				#puts 'before image'
 				puts image
 				#puts 'after image'
-				unless image === 'http://www.horrycounty.org/mugshot/mugshot/null'
-					puts 'image is present'
+				puts "charge count: #{charges.count}"
+				if charges.length > 0 && charges.text != "No Charges Listed" && charges.text != '' && image != 'http://www.horrycounty.org/mugshot/mugshot/null'
 					horry_county.mugshots.create!(:name => name, :booking_time => arrest_date)
 					mugshot = Mugshot.last
-					puts "charge count: #{charges.count}"
-					if charges.length == 1
-						if charges.text === "No Charges Listed" || charges.text === ''
-							puts 'no charges listed'
-							inmate_list.delete(name)
-						else
-							mugshot.charges.create!(:charge => charges.text)
-							puts 'mugshot created'
-							#puts charges.text
-						end
-					elsif charges.length == 0
-						puts charges.length
-						puts 'mugshot deleted'
-						inmate_list.delete(name)
-				  else
-						#puts 'inside charges'
-				    charges.each do |charge|
-							mugshot.charges.create!(:charge => charge.text)
-							#puts charge.text
-				    end
-					end
-					puts 'before photo create'
+					charges.each do |charge|
+						mugshot.charges.create!(:charge => charge.text)
+						puts charge.text
+			    end
+					#puts 'before photo create'
 					mugshot.photos.create!(:image => image)
 				else
-					puts 'no image present'
 					inmate_list.delete(name)
+					puts 'mugshot deleted'
 				end
-				puts 'after image check'
+				#puts 'after image check'
 			end
 		end
-		puts 'before inmate list'
+		#puts 'before inmate list'
 		horry_county.update(:list => inmate_list.to_json)
-		puts 'after inamte list'
+		#puts 'after inamte list'
 	end
 end
