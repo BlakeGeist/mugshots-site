@@ -361,27 +361,33 @@ class Scrape < Thor
 				arrest_date = inmate.css('.cellSmall:nth-child(5)').text
 				charges = inmate.css('.clear-cell-border ul li')
 				image = inmate.css('img').attr('src').to_s
-				puts name
-				puts 'before image'
+				puts "name: #{name}"
+				#puts 'before image'
 				puts image
-				puts 'after image'
+				#puts 'after image'
 				unless image === 'http://www.horrycounty.org/mugshot/mugshot/null'
 					puts 'image is present'
 					horry_county.mugshots.create!(:name => name, :booking_time => arrest_date)
 					mugshot = Mugshot.last
+					puts "charge count: #{charges.count}"
 					if charges.length == 1
 						if charges.text === "No Charges Listed" || charges.text === ''
 							puts 'no charges listed'
 							inmate_list.delete(name)
 						else
 							mugshot.charges.create!(:charge => charges.text)
-							puts charges.text
+							puts 'mugshot created'
+							#puts charges.text
 						end
+					elsif charges.length == 0
+						puts charges.length
+						puts 'mugshot deleted'
+						inmate_list.delete(name)
 				  else
-						puts 'inside charges'
+						#puts 'inside charges'
 				    charges.each do |charge|
 							mugshot.charges.create!(:charge => charge.text)
-							puts charge.text
+							#puts charge.text
 				    end
 					end
 					puts 'before photo create'
