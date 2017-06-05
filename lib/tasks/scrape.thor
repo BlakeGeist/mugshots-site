@@ -331,7 +331,7 @@ class Scrape < Thor
 
 		horry_county = County.find_by slug: 'horry'
 
-		sleep 3
+		sleep 10
 
 		doc = Nokogiri::HTML browser.html
 
@@ -365,23 +365,23 @@ class Scrape < Thor
 				arrest_date = inmate.css('.cellSmall:nth-child(5)').text
 				charges = inmate.css('.clear-cell-border ul li')
 				image = inmate.css('img').attr('src').to_s
-				#puts "name: #{name}"
+				puts "name: #{name}"
 				#puts 'before image'
-				#puts image
+				puts image
 				#puts 'after image'
-				#puts "charge count: #{charges.count}"
+				puts "charge count: #{charges.count}"
 				if charges.length > 0 && charges.text != "No Charges Listed" && charges.text != '' && image != 'http://www.horrycounty.org/mugshot/mugshot/null'
 					horry_county.mugshots.create!(:name => name, :booking_time => arrest_date)
 					mugshot = Mugshot.last
 					charges.each do |charge|
 						mugshot.charges.create!(:charge => charge.text)
-						#puts charge.text
+						puts charge.text
 			    end
 					#puts 'before photo create'
 					mugshot.photos.create!(:image => image)
 				else
 					inmate_list.delete(name)
-					#puts 'mugshot deleted'
+					puts 'mugshot deleted'
 				end
 				#puts 'after image check'
 			end
