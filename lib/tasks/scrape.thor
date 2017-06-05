@@ -331,6 +331,8 @@ class Scrape < Thor
 
 		horry_county = County.find_by slug: 'horry'
 
+		sleep 3
+
 		doc = Nokogiri::HTML browser.html
 
 		inmates = doc.css('#resultsTable .table tbody')
@@ -347,7 +349,7 @@ class Scrape < Thor
 
 		end
 
-		puts inmate_list
+		#puts inmate_list
 
 		if horry_county.list.nil?
 
@@ -355,35 +357,39 @@ class Scrape < Thor
 
 		end
 
+		puts "inmate count list #{inmates.count}"
+
 		inmates.each do |inmate|
 			name = inmate.css('.cellLarge span:nth-child(1)').text
 			unless horry_county.list.include? name
 				arrest_date = inmate.css('.cellSmall:nth-child(5)').text
 				charges = inmate.css('.clear-cell-border ul li')
 				image = inmate.css('img').attr('src').to_s
-				puts "name: #{name}"
+				#puts "name: #{name}"
 				#puts 'before image'
-				puts image
+				#puts image
 				#puts 'after image'
-				puts "charge count: #{charges.count}"
+				#puts "charge count: #{charges.count}"
 				if charges.length > 0 && charges.text != "No Charges Listed" && charges.text != '' && image != 'http://www.horrycounty.org/mugshot/mugshot/null'
 					horry_county.mugshots.create!(:name => name, :booking_time => arrest_date)
 					mugshot = Mugshot.last
 					charges.each do |charge|
 						mugshot.charges.create!(:charge => charge.text)
-						puts charge.text
+						#puts charge.text
 			    end
 					#puts 'before photo create'
 					mugshot.photos.create!(:image => image)
 				else
 					inmate_list.delete(name)
-					puts 'mugshot deleted'
+					#puts 'mugshot deleted'
 				end
 				#puts 'after image check'
 			end
 		end
 		#puts 'before inmate list'
-		horry_county.update(:list => inmate_list.to_json)
+		if inmates.count > 0
+			horry_county.update(:list => inmate_list.to_json)
+		end
 		#puts 'after inamte list'
 	end
 end
