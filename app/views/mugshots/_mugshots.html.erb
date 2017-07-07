@@ -1,6 +1,6 @@
 <% @mugshots.each do |mugshot| %>
 
-  <div id="<%= mugshot.id %>" class="mugshots-mugshot<% if mugshot.refetched === true %> refetched<% end %>">
+  <div id="<%= mugshot.id %>" class="mugshots-mugshot<% if user_signed_in? && mugshot.refetched === true %> refetched<% end %>">
 
     <div class="mugshots-mugshot-name"><%= mugshot.name %></div>
 
