@@ -5,3 +5,4 @@ $('.loader').remove();
 //alert('image_<%= @mugshot.id %>');
 
 $('#'+'image_<%= @mugshot.id %>').attr("src", "<%= @mugshot.photos[0].image.url(:medium) %>");
+$('#<%= @mugshot.id %>').addClass('refetched');
