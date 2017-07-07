@@ -1,1 +1,7 @@
+//alert('end of action');
 //alert('<%= @mugshot.name %>');
+$('.loader').remove();
+//alert('<%= @mugshot.photos[0].image.url(:medium) %>');
+//alert('image_<%= @mugshot.id %>');
+
+$('#'+'image_<%= @mugshot.id %>').attr("src", "<%= @mugshot.photos[0].image.url(:medium) %>");

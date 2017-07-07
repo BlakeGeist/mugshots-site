@@ -1,3 +1,43 @@
 // Place all the styles related to the Charges controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+// variables
+$size: 100px !default;
+$thickness: 6px !default;
+$base-color: #fff !default;
+$wheel-color: #c30 !default;
+$speed: 800ms !default;
+
+
+// styles
+body {
+ background-color: #d5d5d5;
+}
+
+.loader {
+  margin: 5% auto;
+	height: $size;
+	width: $size;
+  border: $thickness solid $base-color;
+	border: {
+    right-color: $wheel-color;
+    top-color: $wheel-color;
+    radius: 100%;
+  }
+  animation: spin $speed infinite linear;
+}
+
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
