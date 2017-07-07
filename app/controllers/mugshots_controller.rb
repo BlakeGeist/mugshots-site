@@ -69,6 +69,6 @@ class MugshotsController < ApplicationController
 
   private
     def mugshot_params
-      params.require(:mugshot).permit(:name, :photo)
+      params.require(:mugshot).permit(:name, :photo, :refetched)
     end
 end
