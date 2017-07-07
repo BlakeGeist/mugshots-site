@@ -22,4 +22,10 @@
 $(document).ready(function() {
   /* Activating Best In Place */
   jQuery(".best_in_place").best_in_place();
+
+  //on click start the spinner
+  $(document).on('click', '[data-refetch]', function(event) {
+    $(this).parent().append('<div class="loader"></div>')
+  });
+
 });
