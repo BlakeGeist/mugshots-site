@@ -52,6 +52,8 @@ class MugshotsController < ApplicationController
     @mugshot = Mugshot.friendly.find(params[:mugshot_id])
     @county = @mugshot.county
     re_fetch_mugshot(@county.name)
+    @mugshot.refetched = true
+    @mugshot.save
     respond_to do |format|
       format.js
     end
