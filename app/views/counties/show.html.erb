@@ -1,28 +1,28 @@
 <main>
 
-  <% if @county.description %>
+  <section class="county-description">
 
-    <section class="county-description">
+    <% if user_signed_in? %>
 
-      <% if user_signed_in? %>
+      <%= form_for ([@county.state, @county]) do |f| %>
 
-        <%= form_for ([@county.state, @county]) do |f| %>
+        <%= f.text_area :description %>
 
-          <%= f.text_area :description %>
-
-          <%= f.submit %>
-
-        <% end %>
-
-      <% else %>
-
-        <%= @county.description %>
+        <%= f.submit %>
 
       <% end %>
 
-    </section>
+    <% else %>
 
-  <% end %>
+      <% if @county.description.length > 0 %>
+
+        <%= @county.description %>
+
+        <% end %>
+
+    <% end %>
+
+  </section>
 
   <section class="mugshots">
 
