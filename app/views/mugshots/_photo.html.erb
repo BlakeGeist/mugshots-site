@@ -1,1 +1,1 @@
-<div class="mugshot-photos-photo"><%= image_tag  @mugshot.photos.last.image.url(:original) %></div>
+<div class="mugshot-photos-photo"><%= image_tag  @mugshot.photos.last.image.url(:original), :itemprop => 'image' %></div>

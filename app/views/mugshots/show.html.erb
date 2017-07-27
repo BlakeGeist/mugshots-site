@@ -1,6 +1,6 @@
 <main>
 
-  <section class="mugshot">
+  <section class="mugshot" itemscope  itemtype="http://schema.org/Person">
 
     <div class="mugshot-photos">
 
@@ -18,7 +18,7 @@
 
     <div class="mugshot-info">
 
-      <h1 class="mugshot-info-item mod-name"><%= @mugshot.name.downcase %></h1>
+      <h1 class="mugshot-info-item mod-name" itemprop="name"><%= @mugshot.name.downcase %></h1>
 
       <div class="mugshot-info-item mod-county"><strong>Arrest Location:</strong> <span class="capitalize"><%= @county.name %> county</span></div>
 
@@ -35,6 +35,12 @@
         <% end %>
 
       </ul>
+
+      <p itemprop="description">
+
+        <span class="capitalize"><%= @mugshot.name.capitalize   %></span> was arrested on and at <%= @mugshot.booking_time %> in <%= @county.name %>.
+
+      </p>
 
       <div><%= link_to 'Previous', state_county_mugshot_path(@state, @county, @mugshot.previous) if @mugshot.previous%> | <%= link_to 'Next', state_county_mugshot_path(@state, @county, @mugshot.next) if @mugshot.next%></div>
 

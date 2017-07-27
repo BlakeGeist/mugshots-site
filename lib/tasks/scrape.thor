@@ -361,11 +361,17 @@ class Scrape < Thor
 
 		inmates.each do |inmate|
 			name = inmate.css('.cellLarge span:nth-child(1)').text
-			unless horry_county.list.include? name
+			if horry_county.list.include? name
 				arrest_date = inmate.css('.cellSmall:nth-child(5)').text
 				charges = inmate.css('.clear-cell-border ul li')
 				image = inmate.css('img').attr('src').to_s
+
+				#split the name based on the coma, then arange correctly, then remove extra space
+				split_name = name.split(",")
+				name = "#{split_name[1]} #{split_name[0]}"
+				name[0] = ''
 				puts "name: #{name}"
+
 				#puts 'before image'
 				puts image
 				#puts 'after image'
