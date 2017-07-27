@@ -64,6 +64,15 @@ class MugshotsController < ApplicationController
     @title = 'HTML Sitemap'
   end
 
+  def xml_sitemap
+    @states = State.all
+    @title = 'XML Sitemap'
+    respond_to do |format|
+      format.xml
+      format.html 
+    end
+  end
+
   def modal
     @mugshot = Mugshot.friendly.find(params[:mugshot_id])
     respond_to do |format|
