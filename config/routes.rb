@@ -9,6 +9,8 @@ Rails.application.routes.draw do
    get '/admin/' => 'admin#index'
    get '/mugshots-admin/' => 'mugshots_admin#index'
 
+   get 'sitemap' => 'mugshots#sitemap'
+
    resources :mugshots do
      get :re_scrape_mugshot
    end

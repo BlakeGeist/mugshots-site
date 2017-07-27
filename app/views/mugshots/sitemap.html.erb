@@ -1,0 +1,42 @@
+
+<ul class="states">
+
+  <% @states.each do |state|%>
+
+    <li class="states-state">
+
+        <div class="states-state-name"><%= state.name.capitalize %></div>
+
+        <ul class="states-state-counties">
+
+          <% state.counties.each do |county| %>
+
+            <li class="states-state-counties-county">
+
+              <%= link_to county.name.capitalize, state_county_path(state, county) %>
+
+              <ul class="states-state-counteis-county-mugshots">
+
+                <% county.mugshots.each do |mugshot| %>
+
+                  <li class="states-state-counteis-county-mugshots-mugshot">
+
+                    <%= link_to mugshot.name.capitalize, state_county_mugshot_path(state, county, mugshot) %>
+
+                  </li>
+
+                <% end %>
+
+              </ul>
+
+            </li>
+
+          <% end %>
+
+        </ul>
+
+    </li>
+
+  <% end %>
+
+</ul>
