@@ -59,6 +59,10 @@ class MugshotsController < ApplicationController
     end
   end
 
+  def sitemap
+    @states = State.all
+    @title = 'HTML Sitemap'
+  end
 
   def modal
     @mugshot = Mugshot.friendly.find(params[:mugshot_id])
