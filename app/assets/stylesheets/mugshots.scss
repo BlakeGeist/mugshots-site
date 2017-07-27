@@ -57,3 +57,26 @@
 .refetched {
   border: 1px solid red;
 }
+
+@media (max-width: 769px) {
+  .mugshots {
+    justify-content: space-around;
+  }
+    .mugshots-mugshot {
+      flex: 0 1 33%;
+    }
+      .mugshots-mugshot-name {
+        font-size: 1.4rem;
+      }
+      .mugshots-mugshot-link-img {
+        width: 100%;
+      }
+}
+@media (max-width: 414px) {
+  .mugshots-mugshot {
+    flex: 0 1 48%;
+  }
+  .mugshots-mugshot-name {
+    font-size: 1.6rem;
+  }
+}

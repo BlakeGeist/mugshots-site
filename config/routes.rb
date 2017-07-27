@@ -10,6 +10,7 @@ Rails.application.routes.draw do
    get '/mugshots-admin/' => 'mugshots_admin#index'
 
    get 'sitemap' => 'mugshots#sitemap'
+   get 'xml_sitemap' => 'mugshots#xml_sitemap'
 
    resources :mugshots do
      get :re_scrape_mugshot
