@@ -360,14 +360,14 @@ class Scrape < Thor
 		puts "inmate count list #{inmates.count}"
 
 		inmates.each do |inmate|
-			name = inmate.css('.cellLarge span:nth-child(1)').text
-			if horry_county.list.include? name
+			org_name = inmate.css('.cellLarge span:nth-child(1)').text
+			if horry_county.list.include? org_name
 				arrest_date = inmate.css('.cellSmall:nth-child(5)').text
 				charges = inmate.css('.clear-cell-border ul li')
 				image = inmate.css('img').attr('src').to_s
 
 				#split the name based on the coma, then arange correctly, then remove extra space
-				split_name = name.split(",")
+				split_name = org_name.split(",")
 				name = "#{split_name[1]} #{split_name[0]}"
 				name[0] = ''
 				puts "name: #{name}"
@@ -386,7 +386,7 @@ class Scrape < Thor
 					#puts 'before photo create'
 					mugshot.photos.create!(:image => image)
 				else
-					inmate_list.delete(name)
+					inmate_list.delete(org_name)
 					puts 'mugshot deleted'
 				end
 				#puts 'after image check'
