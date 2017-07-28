@@ -9,6 +9,7 @@ class CountiesController < ApplicationController
     @mugshots = Mugshot.where(county: @county).order("created_at DESC").page(params[:page]).per_page(20)
     @title = "#{@county.name.capitalize} County Mugshots"
     @description = "View mugshots from #{@county.name.capitalize} County."
+    @canonical_url = state_county_url(@county.state, @county)
   end
 
   def multi_offender_list

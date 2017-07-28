@@ -3,13 +3,15 @@ class MugshotsController < ApplicationController
 
   def index
     @mugshots = Mugshot.all.order("created_at DESC").order("created_at DESC").page(params[:page]).per_page(20)
+    @canonical_url = root_url
   end
 
   def show
     @mugshot = Mugshot.friendly.find(params[:id])
     @county = County.find(@mugshot.county_id)
     @state = State.find(@county.state_id)
-    @title="#{@mugshot.name.capitalize} | #{@county.name.capitalize} County, #{@county.state.name}"
+    @title = "#{@mugshot.name.capitalize} | #{@county.name.capitalize} County, #{@county.state.name}"
+    @canonical_url = state_county_mugshot_url(@mugshot.county.state, @mugshot.county, @mugshot) 
   end
 
   def new
@@ -22,7 +24,6 @@ class MugshotsController < ApplicationController
 
   def create
     @mugshot = Mugshot.new(mugshot_params)
-
     if @mugshot.save
       redirect_to @mugshot
     else
@@ -32,7 +33,6 @@ class MugshotsController < ApplicationController
 
   def update
     @mugshot = Mugshot.find(params[:id])
-
     if @mugshot.update(mugshot_params)
       redirect_to @mugshot
     else
@@ -69,7 +69,7 @@ class MugshotsController < ApplicationController
     @title = 'XML Sitemap'
     respond_to do |format|
       format.xml
-      format.html 
+      format.html
     end
   end
 

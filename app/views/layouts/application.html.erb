@@ -13,6 +13,7 @@
     <%# end meta title %>
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content="<% if @description %><%= @description %><% else %>Local Mugshots<% end %>" />
+    <link rel="canonical" href="<%= @canonical_url %>" />
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
