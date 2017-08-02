@@ -1,4 +1,4 @@
-$('.mugshots-admin').append('<%= j render("mugshots") %>');
+$('.mugshots').append('<%= j render("/mugshots/mugshots") %>');
 <% if @mugshots.next_page %>
   $('.pagination').replaceWith('<%= j will_paginate(@mugshots) %>');
 <% else %>

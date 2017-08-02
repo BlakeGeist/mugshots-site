@@ -1,17 +1,13 @@
-<div class="mugshots-admin">
+<main>
 
-  <div class="mugshot-admin-header">
+  <section class="mugshots">
 
-    <div class="mugshots-admin-header-item mod-name">Name</div>
+    <%= render '/mugshots/mugshots' %>
 
-    <div class="mugshots-admin-header-item mod-charges">Charges</div>
+  </section>
 
-    <div class="mugshots-admin-header-item mod-delete">Delete</div>
+  <%= will_paginate @mugshots %>
 
-  </div>
+</main>
 
-  <%= render 'mugshots' %>
-
-</div>
-
-<%= will_paginate @mugshots %>
+<center> <%= link_to 'Sitemap', sitemap_path %></center>
