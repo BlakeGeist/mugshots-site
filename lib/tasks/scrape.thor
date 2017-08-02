@@ -361,7 +361,7 @@ class Scrape < Thor
 
 		inmates.each do |inmate|
 			org_name = inmate.css('.cellLarge span:nth-child(1)').text
-			if horry_county.list.include? org_name
+			unless horry_county.list.include? org_name
 				arrest_date = inmate.css('.cellSmall:nth-child(5)').text
 				charges = inmate.css('.clear-cell-border ul li')
 				image = inmate.css('img').attr('src').to_s
