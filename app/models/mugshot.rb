@@ -15,6 +15,13 @@ class Mugshot < ActiveRecord::Base
 
   friendly_id :slug_candidates, use: :slugged
 
+  def self.search(search)
+    if search
+      self.where("name like ?", "%#{search}%")
+    else
+      self.all
+    end
+  end
 
  def slug_candidates
    [:name, :name_and_sequence]

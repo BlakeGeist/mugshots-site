@@ -48,4 +48,22 @@
 
   </section>
 
+  <% if @mugshots.count > 1 %>
+
+    <hr />
+
+    <section>
+
+      <h3>More Mugshots of <%= @mugshot.name %></h2>
+
+      <div class="mugshots">
+
+        <%= render 'mugshots' %>
+
+      </dv>
+
+    </section>
+
+    <% end %>
+
 </main>
