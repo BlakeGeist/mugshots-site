@@ -13,7 +13,6 @@
   }
 
     .mugshots-mugshot-name {
-      max-width: 240px;
       overflow: hidden;
       display: -webkit-box;
       -webkit-line-clamp: 1;
@@ -58,19 +57,17 @@
   border: 1px solid red;
 }
 
+.mugshots-show-page {
+  .mugshots-mugshot {
+    flex: 0 1 240px;
+    text-align: center;
+  }
+}
+
 @media (max-width: 769px) {
   .mugshots {
     justify-content: space-around;
   }
-    .mugshots-mugshot {
-      flex: 0 1 33%;
-    }
-      .mugshots-mugshot-name {
-        font-size: 1.4rem;
-      }
-      .mugshots-mugshot-link-img {
-        width: 100%;
-      }
 }
 @media (max-width: 414px) {
   .mugshots-mugshot {

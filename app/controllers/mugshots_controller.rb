@@ -11,7 +11,10 @@ class MugshotsController < ApplicationController
     @county = County.find(@mugshot.county_id)
     @state = State.find(@county.state_id)
     @title = "#{@mugshot.name.capitalize} | #{@county.name.capitalize} County, #{@county.state.name}"
-    @canonical_url = state_county_mugshot_url(@mugshot.county.state, @mugshot.county, @mugshot) 
+    @canonical_url = state_county_mugshot_url(@mugshot.county.state, @mugshot.county, @mugshot)
+
+    @mugshots = Mugshot.all
+    @mugshots = @mugshots.search(@mugshot.name)
   end
 
   def new
