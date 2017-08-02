@@ -1,0 +1,13 @@
+<% @mugshots.each do |mugshot| %>
+
+  <div class="mugshots-admin-mugshots-mugshot">
+
+    <div class="mugshots-admin-mugshots-mugshot-item mod-name"><%= link_to mugshot.name, state_county_mugshot_path(mugshot.county.state, mugshot.county, mugshot), target: '_blank' %></div>
+
+    <div class="mugshots-admin-mugshots-mugshot-item mod-charges"><%= mugshot.charges.length %></div>
+
+    <div class="mugshots-admin-mugshots-mugshot-item mod-delete"><%= link_to 'Delete', mugshot_path(mugshot.id), method: :delete, data: { confirm: 'Are you sure?' } %></div>
+
+  </div>
+
+<% end %>
