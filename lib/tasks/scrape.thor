@@ -398,4 +398,152 @@ class Scrape < Thor
 		end
 		#puts 'after inamte list'
 	end
+
+	desc "mecklenburg county", "scrape the mugshots on the following site"
+	def mecklenburg_county
+
+		require File.expand_path('config/environment.rb')
+
+    require 'rubygems'
+
+    require 'nokogiri'
+
+    require 'open-uri'
+
+		require 'aws-sdk'
+
+    require 'csv'
+
+    require 'json'
+
+		require 'mechanize'
+
+		require 'watir'
+
+		puts 'mecklenburg county'
+
+		browser = Watir::Browser.new :phantomjs
+
+		browser.goto "https://mecksheriffweb.mecklenburgcountync.gov/Arrest"
+
+		mecklenburg_county = County.find_by slug: 'mecklenburg'
+
+		sleep(5)
+
+		browser.checkbox(:id => 'chk24hrs').set
+
+		browser.button(:id, 'btnSearch').click
+
+		sleep(5)
+
+		doc = Nokogiri::HTML browser.html
+
+		inmates = doc.css('[data-bind="text: Name"]')
+
+		inmate_list = Array.new
+
+		inmates.each do |item|
+
+			inmate_list.push(item.text)
+
+		end
+
+		arrests = doc.css('[data-bind="attr: { href: DetailsUrl }"]')
+
+		arrests.each do |arrest|
+
+			link = "https://mecksheriffweb.mecklenburgcountync.gov#{arrest['href']}"
+
+			browser.goto link
+
+			sleep(4)
+
+			doc = Nokogiri::HTML browser.html
+
+			name = doc.css('#divDetailsDesktop [data-bind="text: Name"]').text
+
+			image = doc.css('#divDetailsDesktop [data-bind="attr:{src: ImageUrl}"]')
+
+			puts image
+
+			puts 'before image'
+
+			if image.to_s.length  > 10
+
+				puts 'before set title'
+
+				title = image.attr('src')
+
+				puts 'after set title'
+
+			end
+
+			if title
+
+				image = image.attr('src').to_s
+
+				puts image
+
+			end
+
+			charges = doc.css('.arrestDetailsChargesFontSize~ .arrestDetailsChargesFontSize')
+
+			if name
+
+				puts name
+
+			end
+
+			if charges && charges.count > 1
+
+				charges.each do |charge|
+
+					puts charge.text
+
+				end
+
+			else
+
+				puts charges.text
+
+			end
+
+			arrest_date = doc.css('[data-bind="text: ArrestDate"]').text
+
+			if name && image && charges && title
+
+				mecklenburg_county.mugshots.create!(:name => name, :booking_time => arrest_date)
+				mugshot = Mugshot.last
+
+				charges.each do |charge|
+					mugshot.charges.create!(:charge => charge.text)
+					puts charge.text
+				end
+				#puts 'before photo create'
+				mugshot.photos.create!(:image => image)
+
+
+			end
+
+		end
+
+		if inmates.count > 0
+			mecklenburg_county.update(:list => inmate_list.to_json)
+		end
+
+	end
+
+	desc "function", "test"
+
+	def sleepFor(number)
+
+		i = 0
+		while i < number  do
+			sleep 1
+			puts "sleep #{i}"
+			i +=1
+		end
+
+	end
+
 end
