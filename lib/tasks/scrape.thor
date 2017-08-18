@@ -452,7 +452,7 @@ class Scrape < Thor
 
 		arrests.each do |arrest|
 
-			temp_name = arrests.doc.css('[data-bind="text: Name"]')
+			temp_name = arrest.css('[data-bind="text: Name"]')
 
 			unless horry_county.list.include? temp_name
 
