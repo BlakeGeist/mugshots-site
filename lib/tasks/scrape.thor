@@ -527,7 +527,7 @@ class Scrape < Thor
 					mugshot.photos.create!(:image => image)
 
 				else
-					inmate_list.delete(org_name)
+					inmate_list.delete(temp_name)
 				end
 
 			end
