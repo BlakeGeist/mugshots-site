@@ -399,7 +399,7 @@ class Scrape < Thor
 		#puts 'after inamte list'
 	end
 
-	desc "mecklenburg county", "scrape the mugshots on the following site"
+	desc "scraping mecklenburg county", "scrape the mugshots on the following site"
 	def mecklenburg_county
 
 		require File.expand_path('config/environment.rb')
@@ -420,7 +420,7 @@ class Scrape < Thor
 
 		require 'watir'
 
-		puts 'mecklenburg county'
+		puts 'scraping mecklenburg county'
 
 		browser = Watir::Browser.new :phantomjs
 
@@ -452,9 +452,9 @@ class Scrape < Thor
 
 		arrests.each do |arrest|
 
-			temp_name = arrests.doc.css('[data-bind="text: Name"]')
+			temp_name = arrest.css('[data-bind="text: Name"]').text
 
-			unless horry_county.list.include? temp_name
+			unless mecklenburg_county.list.include? temp_name
 
 				link = "https://mecksheriffweb.mecklenburgcountync.gov#{arrest['href']}"
 
