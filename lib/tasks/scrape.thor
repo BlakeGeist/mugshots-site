@@ -526,6 +526,8 @@ class Scrape < Thor
 					#puts 'before photo create'
 					mugshot.photos.create!(:image => image)
 
+				else
+					inmate_list.delete(temp_name)
 				end
 
 			end
