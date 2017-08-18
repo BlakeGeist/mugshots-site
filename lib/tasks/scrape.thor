@@ -452,76 +452,81 @@ class Scrape < Thor
 
 		arrests.each do |arrest|
 
-			link = "https://mecksheriffweb.mecklenburgcountync.gov#{arrest['href']}"
+			temp_name = arrests.doc.css('[data-bind="text: Name"]')
 
-			browser.goto link
+			unless horry_county.list.include? temp_name
 
-			sleep(4)
+				link = "https://mecksheriffweb.mecklenburgcountync.gov#{arrest['href']}"
 
-			doc = Nokogiri::HTML browser.html
+				browser.goto link
 
-			name = doc.css('#divDetailsDesktop [data-bind="text: Name"]').text
+				sleep(4)
 
-			image = doc.css('#divDetailsDesktop [data-bind="attr:{src: ImageUrl}"]')
+				doc = Nokogiri::HTML browser.html
 
-			puts image
+				name = doc.css('#divDetailsDesktop [data-bind="text: Name"]').text
 
-			puts 'before image'
-
-			if image.to_s.length  > 10
-
-				puts 'before set title'
-
-				title = image.attr('src')
-
-				puts 'after set title'
-
-			end
-
-			if title
-
-				image = image.attr('src').to_s
+				image = doc.css('#divDetailsDesktop [data-bind="attr:{src: ImageUrl}"]')
 
 				puts image
 
-			end
+				puts 'before image'
 
-			charges = doc.css('.arrestDetailsChargesFontSize~ .arrestDetailsChargesFontSize')
+				if image.to_s.length  > 10
 
-			if name
+					puts 'before set title'
 
-				puts name
+					title = image.attr('src')
 
-			end
-
-			if charges && charges.count > 1
-
-				charges.each do |charge|
-
-					puts charge.text
+					puts 'after set title'
 
 				end
 
-			else
+				if title
 
-				puts charges.text
+					image = image.attr('src').to_s
 
-			end
+					puts image
 
-			arrest_date = doc.css('[data-bind="text: ArrestDate"]').text
-
-			if name && image && charges && title
-
-				mecklenburg_county.mugshots.create!(:name => name, :booking_time => arrest_date)
-				mugshot = Mugshot.last
-
-				charges.each do |charge|
-					mugshot.charges.create!(:charge => charge.text)
-					puts charge.text
 				end
-				#puts 'before photo create'
-				mugshot.photos.create!(:image => image)
 
+				charges = doc.css('.arrestDetailsChargesFontSize~ .arrestDetailsChargesFontSize')
+
+				if name
+
+					puts name
+
+				end
+
+				if charges && charges.count > 1
+
+					charges.each do |charge|
+
+						puts charge.text
+
+					end
+
+				else
+
+					puts charges.text
+
+				end
+
+				arrest_date = doc.css('[data-bind="text: ArrestDate"]').text
+
+				if name && image && charges && title
+
+					mecklenburg_county.mugshots.create!(:name => name, :booking_time => arrest_date)
+					mugshot = Mugshot.last
+
+					charges.each do |charge|
+						mugshot.charges.create!(:charge => charge.text)
+						puts charge.text
+					end
+					#puts 'before photo create'
+					mugshot.photos.create!(:image => image)
+
+				end
 
 			end
 
