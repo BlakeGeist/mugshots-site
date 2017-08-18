@@ -2,8 +2,6 @@
 
   <p>Name: <%= state.name %> <br /> Abbv: <%= state.abbv %> <br /> <%= link_to 'Delete', state_path(state), method: :delete, data: { confirm: 'Are you sure?' } %></p>
 
-  <%= state.counties.count %>
-
   <% state.counties.each do |county| %>
 
     <p>Name: <%= county.name %></p>
@@ -26,6 +24,8 @@
       <%= f.submit %>
     </p>
   <% end %>
+
+  <hr />
 
 <% end %>
 
