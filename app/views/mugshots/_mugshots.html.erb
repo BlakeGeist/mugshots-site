@@ -1,6 +1,6 @@
 <% @mugshots.each do |mugshot| %>
 
-  <div id="<%= mugshot.id %>" class="mugshots-mugshot<% if user_signed_in? && mugshot.refetched === true %> refetched<% end %>" itemtype="http://schema.org/Person">
+  <div id="<%= mugshot.id %>" class="mugshots-mugshot<% if user_signed_in? && mugshot.refetched === true %> refetched<% end %>" itemscope itemtype="http://schema.org/Person">
 
     <div class="mugshots-mugshot-name" itemprop="name"><%= mugshot.name %></div>
 
