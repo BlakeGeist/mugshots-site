@@ -14,9 +14,9 @@
 
     <% else %>
 
-      <% if @county.description.length > 0 %>
+      <% if @county.description && @county.description.length > 0 %>
 
-        <%= @county.description %>
+          <%= @county.description %>
 
         <% end %>
 
