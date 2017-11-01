@@ -20,17 +20,41 @@ body {
   margin: 0 auto;
 }
 
+main {
+  padding-top: 4rem;
+}
+
 .capitalize {
   text-transform: capitalize;
 }
 
+.nav {
+  max-height: 4rem;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+}
+  .nav.is-open {
+    max-height: none;
+    overflow: visible;
+    background: #fff;
+  }
+
+.is-mobile {
+  display: none;
+}
+
 @media (max-width: 768px) {
+  .is-mobile {
+    display: block;
+  }
   .nav {
     padding: 0 5px;
   }
     .nav-item {
-      flex: 1 1 100%;
+      align-content: center;
       display: flex;
+      flex: 1 1 100%;
       justify-content: space-between;
     }
     .nav-item-line {
