@@ -1,12 +1,12 @@
 <% @mugshots.each do |mugshot| %>
 
-  <div id="<%= mugshot.id %>" class="mugshots-mugshot<% if user_signed_in? && mugshot.refetched === true %> refetched<% end %>">
+  <div id="<%= mugshot.id %>" class="mugshots-mugshot<% if user_signed_in? && mugshot.refetched === true %> refetched<% end %>" itemtype="http://schema.org/Person">
 
-    <div class="mugshots-mugshot-name"><%= mugshot.name %></div>
+    <div class="mugshots-mugshot-name" itemprop="name"><%= mugshot.name %></div>
 
     <% unless mugshot.photos[0].blank? %>
 
-      <%= link_to image_tag(mugshot.photos[0].image.url(:medium), :class => "mugshots-mugshot-link-img", :id => "image_#{mugshot.id}"), state_county_mugshot_path(mugshot.county.state, mugshot.county, mugshot) , :class => 'mugshots-mugshot-link' %>
+      <%= link_to image_tag(mugshot.photos[0].image.url(:medium), :class => "mugshots-mugshot-link-img", :id => "image_#{mugshot.id}"), state_county_mugshot_path(mugshot.county.state, mugshot.county, mugshot) , :class => 'mugshots-mugshot-link', :itemprop => 'url' %>
 
     <% end %>
 
