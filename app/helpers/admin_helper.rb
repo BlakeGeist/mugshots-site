@@ -111,7 +111,9 @@ module AdminHelper
 
   		end
 
-    when 'mecklenburg' 
+    when 'mecklenburg'
+
+      puts 'scraping mecklenburg county'
 
       require File.expand_path('config/environment.rb')
 
@@ -130,8 +132,6 @@ module AdminHelper
   		require 'mechanize'
 
   		require 'watir'
-
-  		puts 'scraping mecklenburg county'
 
   		browser = Watir::Browser.new :phantomjs
 
