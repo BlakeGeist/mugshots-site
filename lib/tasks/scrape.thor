@@ -323,6 +323,8 @@ class Scrape < Thor
 
 		require 'watir'
 
+		require 'openssl'
+
 		puts 'scraping horry county'
 
 		browser = Watir::Browser.new :phantomjs
@@ -524,7 +526,7 @@ class Scrape < Thor
 				if name && image && charges && title
 
 					mecklenburg_county.mugshots.create!(:name => name, :booking_time => arrest_date, :org_url => org_url)
-					
+
 					mugshot = Mugshot.last
 
 					charges.each do |charge|
