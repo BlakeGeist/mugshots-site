@@ -379,7 +379,7 @@ class Scrape < Thor
 				#puts 'after image'
 				puts "charge count: #{charges.count}"
 				if charges.length > 0 && charges.text != "No Charges Listed" && charges.text != '' && image != 'http://www.horrycounty.org/mugshot/mugshot/null'
-					horry_county.mugshots.create!(:name => name, :booking_time => arrest_date)
+					horry_county.mugshots.create!(:name => name, :booking_time => arrest_date, :org_name => org_name)
 					mugshot = Mugshot.last
 					charges.each do |charge|
 						mugshot.charges.create!(:charge => charge.text)
