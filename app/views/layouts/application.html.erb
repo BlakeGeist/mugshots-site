@@ -30,8 +30,8 @@
   </head>
   <body>
     <header>
-      <nav class="nav mod-desktop">
-        <div class="nav-item"><%= link_to 'Home', root_path %> <span class="nav-item-line">|</span></div>
+      <nav class="nav" data-expander>
+        <div class="nav-item"><%= link_to 'Home', root_path %> <a class="is-mobile" data-toggle="is-open" href=""><img src="/assets/menu.png" height="30px" width="30px" /></a> <span class="nav-item-line">|</span></div>
         <div class="nav-item"><%= link_to 'Ada County', state_county_path("idaho", "ada") %> <span class="nav-item-line">|</span></div>
         <div class="nav-item"><%= link_to 'Canyon County', state_county_path("idaho", "canyon") %> <span class="nav-item-line">|</span></div>
         <div class="nav-item"><%= link_to 'Horry County', state_county_path("south-carolina", "horry") %> <span class="nav-item-line">|</span></div>

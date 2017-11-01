@@ -28,4 +28,11 @@ $(document).ready(function() {
     $(this).parent().append('<div class="loader"></div>')
   });
 
+  //toggle this on off
+  $(document).on('click', '[data-toggle]', function(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    var toggleClass = $(this).data('toggle');
+    $(this).closest('[data-expander]').toggleClass(toggleClass);
+  });
 });
