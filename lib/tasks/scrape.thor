@@ -494,7 +494,10 @@ class Scrape < Thor
 
 				if name
 
-					puts name
+					split_name = name.split(",")
+					name = "#{split_name[1]} #{split_name[0]}"
+					name[0] = ''
+					puts "name: #{name}"
 
 				end
 
