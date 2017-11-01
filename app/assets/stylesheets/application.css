@@ -39,6 +39,9 @@ main {
     overflow: visible;
     background: #fff;
   }
+  .menu-image {
+    height: 30px;
+  }
 
 .is-mobile {
   display: none;

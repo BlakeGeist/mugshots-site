@@ -31,7 +31,7 @@
   <body>
     <header>
       <nav class="nav" data-expander>
-        <div class="nav-item"><%= link_to 'Home', root_path %> <a class="is-mobile" data-toggle="is-open" href=""><img src="/assets/menu.png" height="30px" width="30px" /></a> <span class="nav-item-line">|</span></div>
+        <div class="nav-item"><%= link_to 'Home', root_path %> <a class="is-mobile" data-toggle="is-open" href=""><%= image_tag ('menu.png'), class: 'menu-image' %></a> <span class="nav-item-line">|</span></div>
         <div class="nav-item"><%= link_to 'Ada County', state_county_path("idaho", "ada") %> <span class="nav-item-line">|</span></div>
         <div class="nav-item"><%= link_to 'Canyon County', state_county_path("idaho", "canyon") %> <span class="nav-item-line">|</span></div>
         <div class="nav-item"><%= link_to 'Horry County', state_county_path("south-carolina", "horry") %> <span class="nav-item-line">|</span></div>
