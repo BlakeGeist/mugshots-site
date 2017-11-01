@@ -517,9 +517,14 @@ class Scrape < Thor
 
 				arrest_date = doc.css('[data-bind="text: ArrestDate"]').text
 
+				org_url = browser.url
+
+				puts org_url
+
 				if name && image && charges && title
 
-					mecklenburg_county.mugshots.create!(:name => name, :booking_time => arrest_date)
+					mecklenburg_county.mugshots.create!(:name => name, :booking_time => arrest_date, :org_url => org_url)
+					
 					mugshot = Mugshot.last
 
 					charges.each do |charge|
