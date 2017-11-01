@@ -7,25 +7,25 @@ module AdminHelper
 
       require File.expand_path('config/environment.rb')
 
-  		require 'rubygems'
+      require 'rubygems'
 
       require 'nokogiri'
 
       require 'open-uri'
 
-  		require 'aws-sdk'
+      require 'aws-sdk'
 
       require 'csv'
 
       require 'json'
 
-  		require 'mechanize'
+      require 'mechanize'
 
-  		require 'watir'
+      require 'watir'
 
-  		require 'selenium-webdriver'
+      browser = Watir::Browser.new :phantomjs
 
-  		puts 're-fetching mugshot'
+      puts 're-fetching ' + @mugshot.name + 's mugshot'
 
   		args = %w{--ignore-ssl-errors=true}
 
@@ -71,19 +71,19 @@ module AdminHelper
 
       require 'open-uri'
 
-  		require 'aws-sdk'
+      require 'aws-sdk'
 
       require 'csv'
 
       require 'json'
 
-  		require 'mechanize'
+      require 'mechanize'
 
-  		require 'watir'
+      require 'watir'
+
+      browser = Watir::Browser.new :phantomjs
 
   		puts 're-fetching ' + @mugshot.name + 's mugshot'
-
-  		browser = Watir::Browser.new :phantomjs
 
   		browser.goto "http://apps.canyonco.org/wpprod/CurrentArrests.aspx?Page=Current_Arrests"
 
@@ -113,8 +113,6 @@ module AdminHelper
 
     when 'mecklenburg'
 
-      puts 'scraping mecklenburg county'
-
       require File.expand_path('config/environment.rb')
 
       require 'rubygems'
@@ -123,17 +121,19 @@ module AdminHelper
 
       require 'open-uri'
 
-  		require 'aws-sdk'
+      require 'aws-sdk'
 
       require 'csv'
 
       require 'json'
 
-  		require 'mechanize'
+      require 'mechanize'
 
-  		require 'watir'
+      require 'watir'
 
-  		browser = Watir::Browser.new :phantomjs
+      browser = Watir::Browser.new :phantomjs
+
+      puts 're-fetching ' + @mugshot.name + 's mugshot'
 
   		browser.goto @mugshot.org_url
 
@@ -168,6 +168,54 @@ module AdminHelper
         puts 'after image'
 
 			end
+
+    when 'horry'
+
+      puts 're-fetching ' + @mugshot.name + 's mugshot'
+
+      require File.expand_path('config/environment.rb')
+
+      require 'rubygems'
+
+      require 'nokogiri'
+
+      require 'open-uri'
+
+      require 'aws-sdk'
+
+      require 'csv'
+
+      require 'json'
+
+      require 'mechanize'
+
+      require 'watir'
+
+      browser = Watir::Browser.new :phantomjs
+
+      browser.goto "http://www.horrycounty.org/bookings"
+
+  		horry_county = County.find_by slug: 'horry'
+
+  		sleep 3
+
+  		doc = Nokogiri::HTML browser.html
+
+  		inmates = doc.css('#resultsTable .table tbody')
+
+  		inmates.each do |inmate|
+
+      	org_name = inmate.css('.cellLarge span:nth-child(1)').text
+
+      	if org_name && org_name == @mugshot.org_name
+
+      		image = inmate.css('img').attr('src').to_s
+
+          @mugshot.photos.create!(:image => image)
+
+      	end
+
+  		end
 
     else
 
