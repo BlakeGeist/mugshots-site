@@ -30,14 +30,14 @@
   </head>
   <body>
     <header>
-      <nav>
-        <%= link_to 'Home', root_path %> |
-        <%= link_to 'Ada County', state_county_path("idaho", "ada") %> |
-        <%= link_to 'Canyon County', state_county_path("idaho", "canyon") %> |
-        <%= link_to 'Horry County', state_county_path("south-carolina", "horry") %> |
-        <%= link_to 'Mecklenburg County', state_county_path("south-carolina", "mecklenburg") %>
+      <nav class="nav mod-desktop">
+        <div class="nav-item"><%= link_to 'Home', root_path %> <span class="nav-item-line">|</span></div>
+        <div class="nav-item"><%= link_to 'Ada County', state_county_path("idaho", "ada") %> <span class="nav-item-line">|</span></div>
+        <div class="nav-item"><%= link_to 'Canyon County', state_county_path("idaho", "canyon") %> <span class="nav-item-line">|</span></div>
+        <div class="nav-item"><%= link_to 'Horry County', state_county_path("south-carolina", "horry") %> <span class="nav-item-line">|</span></div>
+        <div class="nav-item"><%= link_to 'Mecklenburg County', state_county_path("south-carolina", "mecklenburg") %></div>
         <% if user_signed_in? %>
-         | <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+         <div class="nav-item"><span class="nav-item-line">|</span> <%= link_to "Sign out", destroy_user_session_path, method: :delete %></div>
         <% end %>
       </nav>
     </header>

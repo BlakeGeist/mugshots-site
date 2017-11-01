@@ -23,3 +23,17 @@ body {
 .capitalize {
   text-transform: capitalize;
 }
+
+@media (max-width: 768px) {
+  .nav {
+    padding: 0 5px;
+  }
+    .nav-item {
+      flex: 1 1 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+    .nav-item-line {
+      display: none;
+    }
+}
