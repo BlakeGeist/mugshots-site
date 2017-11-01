@@ -111,6 +111,60 @@ module AdminHelper
 
   		end
 
+    when 'mecklenburg'
+
+      require File.expand_path('config/environment.rb')
+
+      require 'rubygems'
+
+      require 'nokogiri'
+
+      require 'open-uri'
+
+  		require 'aws-sdk'
+
+      require 'csv'
+
+      require 'json'
+
+  		require 'mechanize'
+
+  		require 'watir'
+
+  		puts 'scraping mecklenburg county'
+
+  		browser = Watir::Browser.new :phantomjs
+
+  		browser.goto @mugshot.org_url
+
+  		mecklenburg_county = County.find_by slug: 'mecklenburg'
+
+			doc = Nokogiri::HTML browser.html
+
+			image = doc.css('#divDetailsDesktop [data-bind="attr:{src: ImageUrl}"]')
+
+			if image.to_s.length  > 10
+
+				puts 'before set title'
+
+				title = image.attr('src')
+
+				puts 'after set title'
+
+			end
+
+			if title
+
+				image = image.attr('src').to_s
+
+				puts 'before image'
+
+        @mugshot.photos.create!(:image => image)
+
+        puts 'after image'
+
+			end
+
     else
 
       puts 'fuck off, it didnt work'

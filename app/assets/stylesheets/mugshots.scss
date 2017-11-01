@@ -9,7 +9,8 @@
 }
 
   .mugshots-mugshot {
-
+    flex: 0 1 250px;
+    max-width: 250px;
   }
 
     .mugshots-mugshot-name {
@@ -17,6 +18,10 @@
       display: -webkit-box;
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
+    }
+
+    .mugshots-mugshot-link-img {
+      width: 100%;
     }
 
 .mugshot {
@@ -71,7 +76,7 @@
 }
 @media (max-width: 414px) {
   .mugshots-mugshot {
-    flex: 0 1 48%;
+    flex: 0 1 47%;
   }
   .mugshots-mugshot-name {
     font-size: 1.6rem;
