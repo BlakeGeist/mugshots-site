@@ -139,9 +139,13 @@ module AdminHelper
 
   		mecklenburg_county = County.find_by slug: 'mecklenburg'
 
-			doc = Nokogiri::HTML browser.html
+      sleep(3)
+
+      doc = Nokogiri::HTML browser.html
 
 			image = doc.css('#divDetailsDesktop [data-bind="attr:{src: ImageUrl}"]')
+
+      puts image
 
 			if image.to_s.length  > 10
 
