@@ -111,7 +111,7 @@ module AdminHelper
 
   		end
 
-    when 'mecklenburg'
+    when 'mecklenburg' 
 
       require File.expand_path('config/environment.rb')
 
