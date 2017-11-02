@@ -401,7 +401,7 @@ class Scrape < Thor
 		end
 
 		if inmate_list.count > 0
-			charleston_county.update(:list => inmate_list.text.to_json)
+			charleston_county.update(:list => inmate_list.to_json)
 		end
 
 	end
