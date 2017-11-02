@@ -294,11 +294,115 @@ class Scrape < Thor
 
 		browser.goto "http://inmatesearch.charlestoncounty.org/"
 
-		horry_county = County.find_by slug: 'charleston'
+		charleston_county = County.find_by slug: 'charleston'
+
+		sleep(3)
+
+		time = Time.now.strftime("%m/%d/%Y")
+
+		browser.text_field(:id => 'ctl00_MainContent_txtBookDtFrom').set(time)
+
+		browser.button(:value => "Search").click
+
+		sleep(3)
+
+		browser.select_list(:id => "MainContent_ddnRcrdsPerPage").select_value "100"
+
+		sleep(3)
 
 		doc = Nokogiri::HTML browser.html
 
-		puts doc
+		inmate_headlines = doc.css('.ui-accordion-header')
+
+		inmate_names = doc.css('.ui-accordion-header .info-bar.align-left.info-bar-width span')
+
+		inmate_list = Array.new
+
+		inmate_names.each do |inmate|
+
+			inmate_list.push(inmate.text)
+
+		end
+
+		if charleston_county.list.nil?
+
+			charleston_county.list = Array.new
+
+		end
+
+		inmate_headlines.each_with_index do |headline, index|
+
+			name = doc.css("#ui-accordion-1-header-#{index} .info-bar.align-left.info-bar-width span").text
+
+			org_name = name
+
+			unless charleston_county.list.include? org_name
+
+				split_name = name.split(",")
+
+				name = "#{split_name[1]} #{split_name[0]}"
+
+				if name.include? ' JR'
+
+					name = name.gsub(' JR', '')
+
+					name = name + ' JR'
+
+				end
+
+				puts "name: #{name}"
+
+				inmate_charges = doc.css("#ui-accordion-1-panel-#{index} .charge-detail li:nth-child(6)")
+
+				photo = doc.css("#ui-accordion-1-panel-#{index} img").attr('src').to_s
+
+				if inmate_charges.length > 0 && photo
+
+					charleston_county.mugshots.create!(:name => name, :booking_time => time, :org_name => org_name)
+
+					mugshot = Mugshot.last
+
+					inmate_charges.each do |charge|
+
+						charge_text = charge.text.gsub('Charge Description:', '')
+
+						mugshot.charges.create!(:charge => charge.text)
+
+						puts "charge: #{charge_text}"
+
+						puts photo
+
+					end
+
+					begin
+
+						mugshot.photos.create!(:image => photo)
+
+					rescue OpenURI::HTTPError => e
+
+						mugshot.destroy
+
+						inmate_list.delete(org_name)
+
+						puts "#{name}'s mugshot has not been added due to not having a photo'"
+
+					end
+
+				else
+
+					inmate_list.delete(org_name)
+
+					puts "#{name}'s mugshot has not been added due to not having any charges'"
+
+				end
+
+			end
+
+		end
+
+		if inmate_list.count > 0
+			charleston_county.update(:list => inmate_list.text.to_json)
+		end
 
 	end
 
