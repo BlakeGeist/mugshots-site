@@ -35,6 +35,7 @@
         <div class="nav-item"><%= link_to 'Ada County', state_county_path("idaho", "ada") %> <span class="nav-item-line">|</span></div>
         <div class="nav-item"><%= link_to 'Canyon County', state_county_path("idaho", "canyon") %> <span class="nav-item-line">|</span></div>
         <div class="nav-item"><%= link_to 'Horry County', state_county_path("south-carolina", "horry") %> <span class="nav-item-line">|</span></div>
+        <div class="nav-item"><%= link_to 'Charleston County', state_county_path("south-carolina", "charleston") %> <span class="nav-item-line">|</span></div>
         <div class="nav-item"><%= link_to 'Mecklenburg County', state_county_path("south-carolina", "mecklenburg") %></div>
         <% if user_signed_in? %>
          <div class="nav-item"><span class="nav-item-line">|</span> <%= link_to "Sign out", destroy_user_session_path, method: :delete %></div>

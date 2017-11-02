@@ -290,8 +290,10 @@ class Scrape < Thor
 
 		puts 'scraping charleston county'
 
+		#get the browser started
 		browser = Watir::Browser.new :phantomjs
 
+		#go to scrape target
 		browser.goto "http://inmatesearch.charlestoncounty.org/"
 
 		charleston_county = County.find_by slug: 'charleston'
@@ -401,7 +403,9 @@ class Scrape < Thor
 		end
 
 		if inmate_list.count > 0
-			charleston_county.update(:list => inmate_list.text.to_json)
+
+			charleston_county.update(:list => inmate_list.to_json)
+
 		end
 
 	end
