@@ -372,13 +372,25 @@ class Scrape < Thor
 
 						puts "charge: #{charge_text}"
 
-						puts photo
-
 					end
 
 					begin
 
-						mugshot.photos.create!(:image => photo)
+						unless photo.include? 'silhouette'
+
+							puts photo
+
+							mugshot.photos.create!(:image => photo)
+
+						else
+
+							mugshot.destroy
+
+							inmate_list.delete(org_name)
+
+							puts "#{name}'s mugshot has not been added due to not having a photo'"
+
+						end
 
 					rescue OpenURI::HTTPError => e
 
