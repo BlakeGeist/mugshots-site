@@ -21,7 +21,6 @@ body {
 }
 
 main {
-  padding-top: 4rem;
 }
 
 .capitalize {
@@ -31,7 +30,6 @@ main {
 .nav {
   max-height: 4rem;
   overflow: hidden;
-  position: absolute;
   width: 100%;
 }
   .nav.is-open {
@@ -44,6 +42,10 @@ main {
     justify-content: space-between;
     display: flex;
   }
+    .nav-item-link {
+      text-align: center;
+      width: 100%;
+    }
     .nav-item-line {
       flex: 1 1 100%;
       text-align: center;
