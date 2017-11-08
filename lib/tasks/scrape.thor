@@ -358,7 +358,7 @@ class Scrape < Thor
 
 				photo = doc.css("#ui-accordion-1-panel-#{index} img").attr('src').to_s
 
-				if inmate_charges.length > 0 && photo
+				if inmate_charges.length > 0 && photo.length > 10
 
 					charleston_county.mugshots.create!(:name => name, :booking_time => time, :org_name => org_name)
 
@@ -394,7 +394,7 @@ class Scrape < Thor
 
 					inmate_list.delete(org_name)
 
-					puts "#{name}'s mugshot has not been added due to not having any charges'"
+					puts "#{name}'s mugshot has not been added due to not having either charges or a photo'"
 
 				end
 
