@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171101205823) do
+ActiveRecord::Schema.define(version: 20171108082339) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,25 @@ ActiveRecord::Schema.define(version: 20171101205823) do
 
   add_index "photos", ["mugshot_id"], name: "index_photos_on_mugshot_id", using: :btree
 
+  create_table "removalcharges", force: :cascade do |t|
+    t.text     "charge"
+    t.integer  "removal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "removalcharges", ["removal_id"], name: "index_removalcharges_on_removal_id", using: :btree
+
+  create_table "removals", force: :cascade do |t|
+    t.string   "name"
+    t.string   "county"
+    t.string   "email"
+    t.text     "photo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "mugshotID"
+  end
+
   create_table "states", force: :cascade do |t|
     t.string   "name"
     t.string   "abbv"
@@ -112,4 +131,5 @@ ActiveRecord::Schema.define(version: 20171101205823) do
   add_foreign_key "counties", "mugshots"
   add_foreign_key "counties", "states"
   add_foreign_key "photos", "mugshots"
+  add_foreign_key "removalcharges", "removals"
 end

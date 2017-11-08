@@ -16,6 +16,11 @@ Rails.application.routes.draw do
      get :re_scrape_mugshot
    end
 
+   resources :removals do
+     resources :removalcharges
+     resources :charges
+   end
+
    resources :states, :path => '' do
      resources :counties, :path => '' do
        get :multi_offender_list

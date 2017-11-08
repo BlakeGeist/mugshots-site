@@ -2,7 +2,7 @@ class MugshotsController < ApplicationController
   include AdminHelper
 
   def index
-    @mugshots = Mugshot.all.order("created_at DESC").order("created_at DESC").page(params[:page]).per_page(20)
+    @mugshots = Mugshot.all.order("created_at DESC").page(params[:page]).per_page(20)
     @canonical_url = root_url
   end
 

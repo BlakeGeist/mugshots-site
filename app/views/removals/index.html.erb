@@ -1,0 +1,19 @@
+<div>
+
+  <% @removals.each do |removal| %>
+
+    <div><%= removal.name %></div>
+
+    <div>
+
+      <% removal.removalcharges.each do |charge| %>
+
+        <div><%= charge.charge %></div>
+
+      <% end %>
+
+    </div>
+
+  <% end %>
+
+</div>
