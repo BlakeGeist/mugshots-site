@@ -22,7 +22,7 @@
 
           <div class="mugshot-photos-photo"><%= image_tag  @mugshot.photos.last.image.url(:medium) %></div>
 
-          Unpublish
+          <%#= link_to 'Unpublish',  {:controller => "removals", :action => "create", :mugshotID => @mugshot.id, :name => @mugshot.name, :email => 'blakegeist@gmail.com', :county => @mugshot.county, :charges => @mugshot.charges, :photo => @mugshot.photos.last}, :method => :post %>
 
         </center>
 

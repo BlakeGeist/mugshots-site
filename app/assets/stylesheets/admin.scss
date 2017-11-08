@@ -114,9 +114,10 @@ h6 {
   position: absolute;
   z-index: 9999;
   top: 6em;
-  left: 50%;
   width: 20em;
-  margin-left: -16em;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   background-color: #fff;
   box-shadow: 0 0 1.5em hsla(0, 0%, 0%, 0.35);
 }
