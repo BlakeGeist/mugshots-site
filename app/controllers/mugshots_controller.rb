@@ -13,7 +13,7 @@ class MugshotsController < ApplicationController
     @title = "#{@mugshot.name.capitalize} | #{@county.name.capitalize} County, #{@county.state.name}"
     @canonical_url = state_county_mugshot_url(@mugshot.county.state, @mugshot.county, @mugshot)
 
-    @mugshots = Mugshot.all.where.not(county: [nil, ""])
+    @mugshots = Mugshot.all.where.not(county_id: nil)
     @mugshots = @mugshots.search(@mugshot.name)
   end
 
