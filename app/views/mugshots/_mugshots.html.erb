@@ -4,13 +4,13 @@
 
     <div class="mugshots-mugshot-name" itemprop="name"><%= mugshot.name %></div>
 
-    <% if !mugshot.photos[0].blank? && mugshot.county %>
+    <% unless mugshot.photos[0].blank? && mugshot.county %>
 
       <%= link_to image_tag(mugshot.photos[0].image.url(:medium), :class => "mugshots-mugshot-link-img", :id => "image_#{mugshot.id}"), state_county_mugshot_path(mugshot.county.state, mugshot.county, mugshot) , :class => 'mugshots-mugshot-link', :itemprop => 'url' %>
 
     <% end %>
 
-    <% if user_signed_in? && mugshot.county %>
+    <% if user_signed_in? %>
 
       <div class="mugshot-admin-tools">
 
