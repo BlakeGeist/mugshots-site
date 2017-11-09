@@ -520,6 +520,101 @@ class Scrape < Thor
 		#puts 'after inamte list'
 	end
 
+	desc "spartanburg_county", "scrape the mugshots on the following site"
+	def spartanburg_county
+
+		require File.expand_path('config/environment.rb')
+
+		require 'rubygems'
+
+		require 'nokogiri'
+
+		require 'open-uri'
+
+		require 'aws-sdk'
+
+		require 'csv'
+
+		require 'json'
+
+		require 'mechanize'
+
+		require 'watir'
+
+		require 'openssl'
+
+		puts 'scraping spartanburg county'
+
+		browser = Watir::Browser.new :phantomjs
+
+		browser.goto "http://www.spartanburgsheriff.org/bookings.php"
+
+		county = County.find_by slug: 'spartanburg'
+
+		doc = Nokogiri::HTML browser.html
+
+		inmates = doc.css('#article td a')
+
+		inmate_list = Array.new
+
+		inmates.each do |inmate|
+
+			inmate_list.push(inmate.text.upcase)
+
+		end
+
+		if county.list.nil?
+
+			county.list = Array.new
+
+		end
+
+		inmates.each do |inmate|
+
+			begin
+
+				name = inmate.text.upcase
+
+				unless county.list.include? name
+
+					url = "http://www.spartanburgsheriff.org/#{inmate.attr('href')}"
+
+					browser.goto url
+
+					doc = Nokogiri::HTML browser.html
+
+					name = doc.search('h1').text
+
+					arrest_date = doc.search('.row:nth-child(7) div:nth-child(1) span').text
+
+					photo = doc.search('img').attr('src').to_s
+
+					charges = doc.search('td:nth-child(2)')
+
+					puts name
+
+					puts photo
+
+					county.mugshots.create!(:name => name, :booking_time => arrest_date, :org_url => url)
+
+					mugshot = Mugshot.last
+
+					create_charges(mugshot, charges)
+
+					mugshot.photos.create!(:image => photo)
+
+				end
+
+			rescue OpenURI::HTTPError => e
+
+			end
+
+		end
+
+		county.update(:list => inmate_list.to_json)
+
+	end
+
 	desc "scraping mecklenburg county", "scrape the mugshots on the following site"
 	def mecklenburg_county
 
@@ -661,15 +756,14 @@ class Scrape < Thor
 
 	end
 
-	desc "function", "test"
+	def create_charges(mugshot, charges)
 
-	def sleepFor(number)
+		charges.each do |charge|
 
-		i = 0
-		while i < number  do
-			sleep 1
-			puts "sleep #{i}"
-			i +=1
+			mugshot.charges.create!(:charge => charge.text)
+
+			puts charge.text
+
 		end
 
 	end
