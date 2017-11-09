@@ -1,25 +1,29 @@
 <% @mugshots.each do |mugshot| %>
 
-  <div id="<%= mugshot.id %>" class="mugshots-mugshot<% if user_signed_in? && mugshot.refetched === true %> refetched<% end %>" itemscope itemtype="http://schema.org/Person">
+  <% if mugshot.county.state %>
 
-    <div class="mugshots-mugshot-name" itemprop="name"><%= mugshot.name %></div>
+    <div id="<%= mugshot.id %>" class="mugshots-mugshot<% if user_signed_in? && mugshot.refetched === true %> refetched<% end %>" itemscope itemtype="http://schema.org/Person">
 
-    <% unless mugshot.photos[0].blank? && mugshot.county %>
+      <div class="mugshots-mugshot-name" itemprop="name"><%= mugshot.name %></div>
 
-      <%= link_to image_tag(mugshot.photos[0].image.url(:medium), :class => "mugshots-mugshot-link-img", :id => "image_#{mugshot.id}"), state_county_mugshot_path(mugshot.county.state, mugshot.county, mugshot) , :class => 'mugshots-mugshot-link', :itemprop => 'url' %>
+      <% unless mugshot.photos[0].blank? %>
 
-    <% end %>
+        <%= link_to image_tag(mugshot.photos[0].image.url(:medium), :class => "mugshots-mugshot-link-img", :id => "image_#{mugshot.id}"), state_county_mugshot_path(mugshot.county.state, mugshot.county, mugshot) , :class => 'mugshots-mugshot-link', :itemprop => 'url' %>
 
-    <% if user_signed_in? %>
+      <% end %>
 
-      <div class="mugshot-admin-tools">
+      <% if user_signed_in? %>
 
-        <%= link_to "Re-fetch Mugshot", { action: "re_scrape_mugshot", controller: "mugshots", mugshot_id: mugshot.id}, remote: true, data: {refetch: "true"} %> |  <%= link_to 'Destroy', state_county_mugshot_path(mugshot.county.state, mugshot.county, mugshot.id), method: :delete, class: 'mugshot-admin-tools-button mod-delete', remote: true %>
+        <div class="mugshot-admin-tools">
 
-      </div>
+          <%= link_to "Re-fetch Mugshot", { action: "re_scrape_mugshot", controller: "mugshots", mugshot_id: mugshot.id}, remote: true, data: {refetch: "true"} %> |  <%= link_to 'Destroy', state_county_mugshot_path(mugshot.county.state, mugshot.county, mugshot.id), method: :delete, class: 'mugshot-admin-tools-button mod-delete', remote: true %>
 
-    <% end %>
+        </div>
 
-  </div>
+      <% end %>
+
+    </div>
+
+  <% end %>
 
 <% end %>
