@@ -4,7 +4,7 @@ class MugshotsAdminController < ApplicationController
       redirect_to root_path
     end
 
-    @mugshots = Mugshot.all.where.not(county_id: nil)
+    @mugshots = Mugshot.all
 
     #multi offender list
     @mugshots = @mugshots.where(name: Mugshot.select(:name).group(:name).having('count(*) > 1')).order("created_at DESC").paginate(:page => params[:page], :per_page => 100)
