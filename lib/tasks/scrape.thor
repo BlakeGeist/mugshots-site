@@ -300,7 +300,7 @@ class Scrape < Thor
 
 		time = Time.now.strftime("%m/%d/%Y")
 
-		browser.text_field(:id => 'ctl00_MainContent_txtBookDtFrom').set(time)
+		browser.input(:id => 'ctl00_MainContent_txtBookDtFrom').send_keys time
 
 		browser.button(:value => "Search").click
 
