@@ -589,17 +589,9 @@ class Scrape < Thor
 
 				image = doc.css('#divDetailsDesktop [data-bind="attr:{src: ImageUrl}"]')
 
-				puts image
-
-				puts 'before image'
-
 				if image.to_s.length  > 10
 
-					puts 'before set title'
-
 					title = image.attr('src')
-
-					puts 'after set title'
 
 				end
 
