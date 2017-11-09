@@ -6,6 +6,7 @@ class CountiesController < ApplicationController
 
   def show
     @county = County.friendly.find(params[:id])
+    @state = State.find(@county.state_id)
     @mugshots = Mugshot.where(county: @county).order("created_at DESC").page(params[:page]).per_page(20)
     @title = "#{@county.name.capitalize} County Mugshots"
     @description = "View mugshots from #{@county.name.capitalize} County."
