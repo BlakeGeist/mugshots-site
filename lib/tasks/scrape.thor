@@ -298,7 +298,7 @@ class Scrape < Thor
 
 		charleston_county = County.find_by slug: 'charleston'
 
-		sleep(3)
+		sleep(4)
 
 		time = Time.now.strftime("%m/%d/%Y")
 
@@ -306,11 +306,11 @@ class Scrape < Thor
 
 		browser.button(:value => "Search").click
 
-		sleep(3)
+		sleep(4)
 
 		browser.select_list(:id => "MainContent_ddnRcrdsPerPage").select_value "100"
 
-		sleep(3)
+		sleep(4)
 
 		doc = Nokogiri::HTML browser.html
 
