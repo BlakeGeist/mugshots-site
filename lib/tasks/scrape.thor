@@ -607,6 +607,12 @@ class Scrape < Thor
 
 			rescue OpenURI::HTTPError => e
 
+				mugshot.destroy
+
+				inmate_list.delete(org_name)
+
+				puts "#{name}'s mugshot has not been added due to not having either charges or a photo'"
+
 			end
 
 		end
