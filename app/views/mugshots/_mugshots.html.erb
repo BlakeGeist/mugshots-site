@@ -8,7 +8,7 @@
 
       <% unless mugshot.photos[0].blank? %>
 
-        <%= link_to image_tag(mugshot.photos[0].image.url(:medium), :class => "mugshots-mugshot-link-img", :id => "image_#{mugshot.id}"), state_county_mugshot_path(mugshot.county.state, mugshot.county, mugshot) , :class => 'mugshots-mugshot-link', :itemprop => 'url' %>
+        <%= link_to image_tag(mugshot.photos[0].image.url(:medium), :class => "mugshots-mugshot-link-img", :id => "image_#{mugshot.id}"), state_county_mugshot_url(mugshot.county.state, mugshot.county, mugshot) , :class => 'mugshots-mugshot-link', :itemprop => 'url' %>
 
       <% end %>
 
