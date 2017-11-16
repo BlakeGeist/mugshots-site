@@ -35,6 +35,8 @@ gem 'thor'
 gem "watir", "~> 6.0.0"
 gem 'best_in_place', '~> 3.0.1'
 gem 'rails_12factor', group: :production
+#seach gem
+gem 'ransack'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

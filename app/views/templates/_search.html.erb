@@ -1,0 +1,13 @@
+<section class="search">
+
+  <%= search_form_for @search, url: request.original_url do |f| %>
+
+    <%= f.label :name_cont %>
+
+    <%= f.search_field :name_cont %>
+
+    <%= f.submit %>
+
+  <% end %>
+
+</section>

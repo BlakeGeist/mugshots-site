@@ -2,7 +2,9 @@ class MugshotsController < ApplicationController
   include AdminHelper
 
   def index
-    @mugshots = Mugshot.all.order("created_at DESC").page(params[:page]).per_page(20)
+    @search = Mugshot.all.order("created_at DESC").ransack(params[:q])
+    @the_search = @search.result(distinct: true)
+    @mugshots = @the_search.paginate(:page => params[:page], :per_page => 24)
     @canonical_url = root_url
   end
 
