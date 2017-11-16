@@ -298,7 +298,6 @@ class Scrape < Thor
 
 		charleston_county = County.find_by slug: 'charleston'
 
-
 		time = Date.yesterday.strftime("%m/%d/%Y")
 
 		browser.text_field(:id => 'ctl00_MainContent_txtBookDtFrom').set(time)
@@ -573,9 +572,9 @@ class Scrape < Thor
 
 			begin
 
-				name = inmate.text.upcase
+				org_name = inmate.text.upcase
 
-				unless county.list.include? name
+				unless county.list.include? org_name
 
 					url = "http://www.spartanburgsheriff.org/#{inmate.attr('href')}"
 
@@ -618,6 +617,92 @@ class Scrape < Thor
 		end
 
 		county.update(:list => inmate_list.to_json)
+
+	end
+
+	desc "cumberland_county ", "scrape the mugshots on the following site"
+
+	def cumberland_county
+
+		require File.expand_path('config/environment.rb')
+
+		require 'rubygems'
+
+		require 'nokogiri'
+
+		require 'open-uri'
+
+		require 'aws-sdk'
+
+		require 'csv'
+
+		require 'json'
+
+		require 'mechanize'
+
+		require 'watir'
+
+		require 'openssl'
+
+		puts 'scraping cumberland county'
+
+		browser = Watir::Browser.new :phantomjs
+
+		browser.goto "http://www.ccsonc.org:8000/active_inmates/Inmates.aspx"
+
+		#get a list of the alphabet
+		alph = ('a'..'z').to_a
+
+		#loop over each lettter in the alphabet
+		alph.each do |letter|
+
+			#search the current letter in the search box
+			browser.text_field(:id => 'LastName').set(letter)
+
+			#click the search button
+			browser.button(:id => "SubmitBtn").click
+
+			#get a copy of the current broswer as html
+			doc = Nokogiri::HTML browser.html
+
+			#get a list of all of the inmates
+			inmates = doc.search('#Incident_GV tr')
+
+			#loop over the list of inmates with index
+			inmates.each_with_index do |inmate,index|
+
+				#get a car of the inmates name
+				name = inmate.search('span').text
+
+				#if the name is present and its length is greater than 2
+				if name && name.length > 2
+
+					#split the name by coma
+					split_name = name.split(",")
+
+					#create a better look name
+					name = "#{split_name[1]} #{split_name[0]}"
+
+					#remove the coma
+					name[0] = ''
+
+					puts "name: #{name}"
+
+					# click the more details link for the inmate
+					browser.a(:text=>"More Details", :index => index-1).click
+
+					#get the document in html var
+					doc = Nokogiri::HTML browser.html
+
+
+					charges = doc.search('#Inmate_DV table a')
+
+
+				end
+
+			end
+
+		end
 
 	end
 
