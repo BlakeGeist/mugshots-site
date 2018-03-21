@@ -847,6 +847,219 @@ class Scrape < Thor
 
 	end
 
+	desc "scraping york sc county", "scrape the mugshots on the following site"
+	def york_county
+
+		require File.expand_path('config/environment.rb')
+
+    require 'rubygems'
+
+    require 'nokogiri'
+
+    require 'open-uri'
+
+		require 'aws-sdk'
+
+    require 'csv'
+
+    require 'json'
+
+		require 'mechanize'
+
+		require 'watir'
+
+		puts 'scraping mecklenburg county'
+
+		browser = Watir::Browser.new :phantomjs
+
+		browser.goto "http://inmatesinjail.yorkcountygov.com/detentioncenter/inmatesinjail.aspx"
+
+		york_county = County.find_by slug: 'york'
+
+		browser.button(:id, 'btnSortByMostRecent').click
+
+		time = Date.yesterday.strftime("%m/%d/%Y")
+
+		doc = Nokogiri::HTML browser.html
+
+		trs = doc.css('#dgJackets > tbody > tr:not(:nth-child(1)):not(:nth-child(2)):not(:last-child)')
+
+		inmate_list = Array.new
+
+		inmate_names = trs.css('> td:nth-child(1)')
+
+		inmate_names.each do |inmate|
+
+			name = inmate.css('tbody > tr > td').first.text
+
+			name = cleanName(name)
+
+			inmate_list.push(name)
+
+			puts cleanName(name)
+
+		end
+
+		if york_county.list.nil?
+
+			york_county.list = Array.new
+
+		end
+
+		puts inmate_list
+
+		trs.each do |tr|
+
+			info = tr.search('td').first
+
+			org_name = info.search('table tbody > tr:first-child').text.to_s
+
+			raw_image = tr.search('> td')[1]
+
+			image = raw_image.search('img').attr('src').to_s
+
+			image.gsub!('..', 'http://inmatesinjail.yorkcountygov.com')
+
+			raw_charges = tr.search('> td')[2]
+
+			charges = raw_charges.search('table table tbody > tr:not(:nth-child(1))')
+
+			name = cleanName(org_name)
+
+			unless york_county.list.include? name
+
+				puts "name: #{name}"
+
+				puts image
+
+				york_county.mugshots.create!(:name => name, :booking_time => time, :org_name => org_name)
+
+				mugshot = Mugshot.last
+
+				charges.each do |charge|
+
+					charge_text = cleanText(charge.search('td')[1].text)
+
+					mugshot.charges.create!(:charge => charge_text)
+
+					puts "charge: #{charge_text}"
+
+				end
+
+				begin
+
+					mugshot.photos.create!(:image => image)
+
+				rescue OpenURI::HTTPError => e
+
+					mugshot.destroy
+
+					inmate_list.delete(name)
+
+					puts "#{name}'s mugshot has not been added due to not having a photo'"
+
+				end
+
+			end
+
+		end
+
+		if inmate_list.count > 0
+
+			york_county.update(:list => inmate_list.to_json)
+
+		end
+
+	end
+
+	desc 'cleanName', 'clean the name'
+	def cleanName(name)
+
+		while name.include? '  '
+			name = name.gsub('  ', '')
+		end
+
+		name = name.gsub(/\n/, " ").to_s
+
+		while name.include? '  '
+			name = name.gsub('  ', ' ')
+		end
+
+		if name.starts_with? (' ')
+
+			name = name[1..-1]
+
+		end
+
+		name = name.reverse
+
+		if name.starts_with? (' ')
+
+			name = name[1..-1]
+
+		end
+
+		name = name.reverse
+
+		return firstNameFix(name)
+	end
+
+	desc 'cleanText', 'clean the text'
+	def cleanText(text)
+
+		while text.include? '  '
+			text = text.gsub('  ', '')
+		end
+
+		text = text.gsub(/\n/, " ").to_s
+
+		while text.include? '  '
+			text = text.gsub('  ', ' ')
+		end
+
+		if text.starts_with? (' ')
+
+			text = text[1..-1]
+
+		end
+
+		text = text.reverse
+
+		if text.starts_with? (' ')
+
+			text = text[1..-1]
+
+		end
+
+		text = text.reverse
+
+		return text
+	end
+
+	desc 'firstNameFix', 'fix first name'
+	def firstNameFix(name)
+		split_name = name.split(",")
+
+		name = "#{split_name[1]} #{split_name[0]}"
+
+		if name.include? ' JR'
+
+			name = name.gsub(' JR', '')
+
+			name = name + ' JR'
+
+		end
+
+		if name.starts_with? (' ')
+
+			name = name[1..-1]
+
+		end
+
+		return name
+	end
+
+	desc 'dis', 'dis'
 	def create_charges(mugshot, charges)
 
 		charges.each do |charge|

@@ -4,8 +4,6 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
 # Use sqlite3 as the database for Active Record
-gem 'pg'
-
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -16,6 +14,7 @@ gem 'coffee-script-source', '1.8.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 gem 'fog'
+gem 'selenium-webdriver', '~> 3.6.0'
 gem "paperclip", "~> 5.0.0"
 gem 'aws-sdk', '~> 2.3'
 gem 'rmagick', '~> 2.13.2', :platforms => :ruby
@@ -32,9 +31,11 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'will_paginate'
 gem 'thor'
-gem "watir", "~> 6.0.0"
+gem "watir", "6.0.0"
 gem 'best_in_place', '~> 3.0.1'
 gem 'rails_12factor', group: :production
+gem 'pg', '0.21.0'
+
 #seach gem
 gem 'ransack'
 

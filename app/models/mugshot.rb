@@ -13,8 +13,6 @@ class Mugshot < ActiveRecord::Base
     county.mugshots.where(["id < ?", id]).last
   end
 
-  friendly_id :slug_candidates, use: :slugged
-
   def self.search(search)
     if search
       self.where("name like ?", "%#{search}%")
@@ -24,13 +22,16 @@ class Mugshot < ActiveRecord::Base
   end
 
  def slug_candidates
-   [:name, :name_and_sequence]
+   [
+     :name,
+     [:name, :sequence]
+   ]
  end
 
- def name_and_sequence
+ def sequence
    slug = name.to_param
-   sequence = Mugshot.where(name: "#{slug}-").count + 2
-   "#{slug}--#{sequence}"
+   return sequence = Mugshot.where("name like '#{slug}'").count + 2
+
  end
 
 end
