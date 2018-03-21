@@ -31,15 +31,26 @@
   <body>
     <header>
       <nav class="nav" data-expander>
-        <div class="nav-item"><%= link_to 'Home', root_path %> <a class="is-mobile" data-toggle="is-open" href=""><%= image_tag ('menu.png'), class: 'menu-image' %></a> <span class="nav-item-line">|</span></div>
-        <div class="nav-item"><%= link_to 'Ada County', state_county_path("idaho", "ada"), class: 'nav-item-link' %> <span class="nav-item-line">|</span></div>
-        <div class="nav-item"><%= link_to 'Canyon County', state_county_path("idaho", "canyon"), class: 'nav-item-link' %> <span class="nav-item-line">|</span></div>
-        <div class="nav-item"><%= link_to 'Horry County', state_county_path("south-carolina", "horry"), class: 'nav-item-link' %> <span class="nav-item-line">|</span></div>
-        <div class="nav-item"><%= link_to 'Charleston County', state_county_path("south-carolina", "charleston"), class: 'nav-item-link' %> <span class="nav-item-line">|</span></div>
-        <div class="nav-item"><%= link_to 'Spartanburg County', state_county_path("south-carolina", "spartanburg"), class: 'nav-item-link' %> <span class="nav-item-line">|</span></div>
+        <div class="nav-item"><%= link_to 'Home', root_path %> <a class="is-mobile" data-toggle="is-open" href=""><%= image_tag ('menu.png'), class: 'menu-image' %></a></div>
+        <div class="nav-item"><span class="nav-item-line">|</span></div>
+        <div class="nav-item"><%= link_to 'Ada County', state_county_path("idaho", "ada"), class: 'nav-item-link' %></div>
+        <div class="nav-item"><span class="nav-item-line">|</span></div>
+        <div class="nav-item"><%= link_to 'Canyon County', state_county_path("idaho", "canyon"), class: 'nav-item-link' %></div>
+        <div class="nav-item"><span class="nav-item-line">|</span></div>
+        <div class="nav-item"><%= link_to 'Horry County', state_county_path("south-carolina", "horry"), class: 'nav-item-link' %></div>
+        <div class="nav-item"><span class="nav-item-line">|</span></div>
+        <div class="nav-item"><%= link_to 'Charleston County', state_county_path("south-carolina", "charleston"), class: 'nav-item-link' %></div>
+        <div class="nav-item"><span class="nav-item-line">|</span></div>
+        <div class="nav-item"><%= link_to 'Spartanburg County', state_county_path("south-carolina", "spartanburg"), class: 'nav-item-link' %></div>
+        <div class="nav-item"><span class="nav-item-line">|</span></div>
+        <div class="nav-item"><%= link_to 'York County', state_county_path("south-carolina", "york"), class: 'nav-item-link' %></div>
+        <div class="nav-item"><span class="nav-item-line">|</span></div>
         <div class="nav-item"><%= link_to 'Mecklenburg County', state_county_path("north-carolina", "mecklenburg"), class: 'nav-item-link' %></div>
         <% if user_signed_in? %>
-         <div class="nav-item"><span class="nav-item-line">|</span> <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: 'nav-item-link' %></div>
+        <div class="nav-item"><span class="nav-item-line">|</span></div>
+        <div class="nav-item"><%= link_to "Sign out", destroy_user_session_path, method: :delete, class: 'nav-item-link' %></div>
+        <div class="nav-item"><span class="nav-item-line">|</span></div>
+        <div class="nav-item"><%= link_to "Edit User", edit_user_registration_path, class: 'nav-item-link' %></div>
         <% end %>
       </nav>
     </header>
