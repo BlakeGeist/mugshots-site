@@ -18,7 +18,7 @@ class CountiesController < ApplicationController
 
   def multi_offender_list
     @county = County.friendly.find(params[:county_id])
-    @mugshots = Mugshot.where(county: @county).group(:name, :id)
+    @mugshots = Mugshot.where(county: @county).group(:name, :id).paginate(:page => params[:page], :per_page => 24)
     render 'multi_offender_list'
   end
 

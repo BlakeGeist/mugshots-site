@@ -1,0 +1,29 @@
+<% @mugshots.each do |mugshot| %>
+
+  <% if mugshot.county && mugshot.county.state %>
+
+    <div id="<%= mugshot.id %>" class="mugshots-mugshot<% if user_signed_in? && mugshot.refetched === true %> refetched<% end %>" itemscope itemtype="http://schema.org/Person">
+
+      <div class="mugshots-mugshot-name" itemprop="name"><%= mugshot.name %></div>
+
+      <% unless mugshot.photos[0].blank? %>
+
+        <%= link_to image_tag(mugshot.photos[0].image.url(:medium), :class => "mugshots-mugshot-link-img", :id => "image_#{mugshot.id}"), state_county_mugshot_url(mugshot.county.state, mugshot.county, mugshot) , :class => 'mugshots-mugshot-link', :itemprop => 'url' %>
+
+      <% end %>
+
+      <% if user_signed_in? %>
+
+        <div class="mugshot-admin-tools">
+
+          <%= link_to "Re-fetch Mugshot", { action: "re_scrape_mugshot", controller: "mugshots", mugshot_id: mugshot.id}, remote: true, data: {refetch: "true"} %> |  <%= link_to 'Destroy', state_county_mugshot_path(mugshot.county.state, mugshot.county, mugshot.id), method: :delete, class: 'mugshot-admin-tools-button mod-delete', remote: true %>
+
+        </div>
+
+      <% end %>
+
+    </div>
+
+  <% end %>
+
+<% end %>
