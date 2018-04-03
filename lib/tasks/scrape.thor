@@ -794,7 +794,7 @@ class Scrape < Thor
 				if name
 
 					if name.include? "'"
-						name.gusb!("'", ' ');
+						name.gsub!("'", ' ');
 					end
 
 					split_name = name.split(",")
