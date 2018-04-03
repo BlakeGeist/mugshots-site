@@ -793,6 +793,10 @@ class Scrape < Thor
 
 				if name
 
+					if name.include? "'"
+						name.gusb!("'", ' ');
+					end
+
 					split_name = name.split(",")
 					name = "#{split_name[1]} #{split_name[0]}"
 					name[0] = ''
